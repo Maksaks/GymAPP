@@ -5,6 +5,10 @@ VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course_project_GYMAPP", "Course_project_GYMAPP\Course_project_GYMAPP.csproj", "{D20E2642-1DB0-4A50-BCCA-E8414B2BD0D3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{ADF1B354-2F87-45FD-873F-672B4EE3B83D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course_project_GYMAPP.Domain", "Course_project_GYMAPP.Domain\Course_project_GYMAPP.Domain.csproj", "{C574DD8F-7F25-47E2-943E-F0E9CC2B0ECD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{D20E2642-1DB0-4A50-BCCA-E8414B2BD0D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D20E2642-1DB0-4A50-BCCA-E8414B2BD0D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D20E2642-1DB0-4A50-BCCA-E8414B2BD0D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C574DD8F-7F25-47E2-943E-F0E9CC2B0ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C574DD8F-7F25-47E2-943E-F0E9CC2B0ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C574DD8F-7F25-47E2-943E-F0E9CC2B0ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C574DD8F-7F25-47E2-943E-F0E9CC2B0ECD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C574DD8F-7F25-47E2-943E-F0E9CC2B0ECD} = {ADF1B354-2F87-45FD-873F-672B4EE3B83D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAC4246E-39F1-4337-BE7A-329797D4C527}
