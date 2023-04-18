@@ -1,6 +1,7 @@
 ﻿using Course_project_GYMAPP.DAL.Interfaces;
 using Course_project_GYMAPP.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Course_project_GYMAPP.DAL.Repositories
 {
-    internal class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly AppDbContext appDb;
 
@@ -20,22 +21,27 @@ namespace Course_project_GYMAPP.DAL.Repositories
 
         public async Task<bool> Create(User entity)
         {
-            throw new NotImplementedException();
+            await appDb.User.AddAsync(entity);
+            await appDb.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<bool> Delete(User entity)
         {
-            throw new NotImplementedException();
+            appDb.User.Remove(entity);
+            await appDb.SaveChangesAsync();
+            return true;
         }
 
         public async Task<User> Get(int id)
         {
-            throw new NotImplementedException();
+            return await appDb.User.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<User> GetByName(string Name)
         {
-            throw new NotImplementedException();
+            return await appDb.User.FirstOrDefaultAsync(x => x.Name == Name);
         }
 
         public async Task<List<User>> Select()
@@ -45,7 +51,9 @@ namespace Course_project_GYMAPP.DAL.Repositories
 
         public async Task<User> Update(User entity)
         {
-            throw new NotImplementedException();
+            appDb.User.Update(entity);
+            await appDb.SaveChangesAsync();
+            return entity;
         }
     }
 }
