@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Course_project_GYMAPP.Domain.Entity
 {
-    internal class Admin
+    public class Admin
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
     }
 }
