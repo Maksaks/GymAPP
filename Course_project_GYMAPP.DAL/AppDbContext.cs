@@ -11,12 +11,14 @@ namespace Course_project_GYMAPP.DAL
     public class AppDbContext : DbContext
     {
 
-        public DbSet<User>
+        public DbSet<User> User { get; set; }
+        public DbSet<Trainer> Trainer { get; set; }
+        public DbSet<Admin> Admin { get; set; }
 
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
         { 
-            Database.EnsureCreated();
+
         }
     }
 }
