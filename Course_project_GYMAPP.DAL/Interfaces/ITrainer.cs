@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Course_project_GYMAPP.DAL.Interfaces
 {
-    internal interface ITrainer : IBaseRepository<Trainer>
+    public interface ITrainer : IBaseRepository<Trainer>
     {
         Task<Trainer> GetByName(string Name);
     }

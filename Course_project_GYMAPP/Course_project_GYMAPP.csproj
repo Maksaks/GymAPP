@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Course_project_GYMAPP.DAL\Course_project_GYMAPP.DAL.csproj" />
+    <ProjectReference Include="..\Course_project_GYMAPP.Service\Course_project_GYMAPP.Service.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course_project_GYMAPP", "Course_project_GYMAPP\Course_project_GYMAPP.csproj", "{D20E2642-1DB0-4A50-BCCA-E8414B2BD0D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Course_project_GYMAPP", "Course_project_GYMAPP\Course_project_GYMAPP.csproj", "{D20E2642-1DB0-4A50-BCCA-E8414B2BD0D3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{ADF1B354-2F87-45FD-873F-672B4EE3B83D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course_project_GYMAPP.Domain", "Course_project_GYMAPP.Domain\Course_project_GYMAPP.Domain.csproj", "{C574DD8F-7F25-47E2-943E-F0E9CC2B0ECD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Course_project_GYMAPP.Domain", "Course_project_GYMAPP.Domain\Course_project_GYMAPP.Domain.csproj", "{C574DD8F-7F25-47E2-943E-F0E9CC2B0ECD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{2AD2D4E2-B43E-48F8-88F2-33B9CFE7883D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course_project_GYMAPP.DAL", "Course_project_GYMAPP.DAL\Course_project_GYMAPP.DAL.csproj", "{7664C346-1878-4A93-977A-97FEDB4425F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Course_project_GYMAPP.DAL", "Course_project_GYMAPP.DAL\Course_project_GYMAPP.DAL.csproj", "{7664C346-1878-4A93-977A-97FEDB4425F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{6D51B4FE-C92F-465D-B5B7-2B6609ADD765}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Course_project_GYMAPP.Service", "Course_project_GYMAPP.Service\Course_project_GYMAPP.Service.csproj", "{319A6936-BF33-4BB8-A51A-F0963D96DF29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{7664C346-1878-4A93-977A-97FEDB4425F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7664C346-1878-4A93-977A-97FEDB4425F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7664C346-1878-4A93-977A-97FEDB4425F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{319A6936-BF33-4BB8-A51A-F0963D96DF29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{319A6936-BF33-4BB8-A51A-F0963D96DF29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{319A6936-BF33-4BB8-A51A-F0963D96DF29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{319A6936-BF33-4BB8-A51A-F0963D96DF29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C574DD8F-7F25-47E2-943E-F0E9CC2B0ECD} = {ADF1B354-2F87-45FD-873F-672B4EE3B83D}
 		{7664C346-1878-4A93-977A-97FEDB4425F1} = {2AD2D4E2-B43E-48F8-88F2-33B9CFE7883D}
+		{319A6936-BF33-4BB8-A51A-F0963D96DF29} = {6D51B4FE-C92F-465D-B5B7-2B6609ADD765}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAC4246E-39F1-4337-BE7A-329797D4C527}
