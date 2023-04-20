@@ -8,6 +8,7 @@ namespace Course_project_GYMAPP.Domain.Enum
 {
     public enum StatusCode
     {
+        UserNotFound,
         OK = 200,
         InternalServerError = 500
     }

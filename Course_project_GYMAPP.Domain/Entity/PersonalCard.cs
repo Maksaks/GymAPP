@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Course_project_GYMAPP.Domain.Entity
+{
+    public class PersonalCard
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Duration { get; set; }
+        public float Price { get; set; }
+    }
+}
