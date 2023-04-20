@@ -15,13 +15,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<ITrainer, TrainerRepository>();
-builder.Services.AddScoped<IAdmin, AdminRepository>();
-
+builder.Services.AddScoped<ITrainerRepository, TrainerRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<IGymUserRepository, InGymUserRepository>();
+builder.Services.AddScoped<IPersonalCardRepository, PersonalCardRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITrainerService, TrainerService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IGymUserService, InGymUserService>();
+builder.Services.AddScoped<IPersonalCardService, PersonalCardService>();
 
 
 var app = builder.Build();

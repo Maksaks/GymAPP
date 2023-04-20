@@ -1,5 +1,6 @@
 ﻿using Course_project_GYMAPP.DAL.Interfaces;
 using Course_project_GYMAPP.Models;
+using Course_project_GYMAPP.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,15 +8,16 @@ namespace Course_project_GYMAPP.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IGymUserRepository gymUserRepository;
 
-        public HomeController(IUserRepository userRepository)
+        public HomeController(IGymUserRepository gymUserRepository)
         {
-            _userRepository = userRepository;
+            this.gymUserRepository = gymUserRepository;
         }
 
         public async Task<IActionResult> Index()
         {
+            await gymUserRepository.Select();
             return View();
         }
 

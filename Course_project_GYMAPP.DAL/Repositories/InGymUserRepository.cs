@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Course_project_GYMAPP.DAL.Repositories
 {
-    public class InGymUserRepository : IGymUser
+    public class InGymUserRepository : IGymUserRepository
     {
         private readonly AppDbContext appDb;
 
@@ -17,34 +17,34 @@ namespace Course_project_GYMAPP.DAL.Repositories
         {
             this.appDb = appDb;
         }
-        public async Task<bool> Create(User entity)
+        public async Task<bool> Create(InGymUser entity)
         {
-            await appDb.InGymUsers.AddAsync(entity);
+            await appDb.InGymUser.AddAsync(entity);
             await appDb.SaveChangesAsync();
 
             return true;
         }
 
-        public async Task<bool> Delete(User entity)
+        public async Task<bool> Delete(InGymUser entity)
         {
-            appDb.InGymUsers.Remove(entity);
+            appDb.InGymUser.Remove(entity);
             await appDb.SaveChangesAsync();
             return true;
         }
 
-        public async Task<User> Get(int id)
+        public async Task<InGymUser> Get(int id)
         {
-            return await appDb.InGymUsers.FirstOrDefaultAsync(x => x.ID == id);
+            return await appDb.InGymUser.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<List<User>> Select()
+        public async Task<List<InGymUser>> Select()
         {
-            return await appDb.InGymUsers.ToListAsync();
+            return await appDb.InGymUser.ToListAsync();
         }
 
-        public async Task<User> Update(User entity)
+        public async Task<InGymUser> Update(InGymUser entity)
         {
-            appDb.InGymUsers.Update(entity);
+            appDb.InGymUser.Update(entity);
             await appDb.SaveChangesAsync();
             return entity;
         }

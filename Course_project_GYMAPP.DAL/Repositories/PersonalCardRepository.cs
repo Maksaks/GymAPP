@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Course_project_GYMAPP.DAL.Repositories
 {
-    public class PersonalCardRepository : IPersonalCard
+    public class PersonalCardRepository : IPersonalCardRepository
     {
         private readonly AppDbContext appDb;
 

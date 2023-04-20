@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Course_project_GYMAPP.DAL.Interfaces
 {
-    public interface IPersonalCard : IBaseRepository<PersonalCard>
+    public interface IPersonalCardRepository : IBaseRepository<PersonalCard>
     {
     }
 }

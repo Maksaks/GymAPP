@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Course_project_GYMAPP.DAL.Interfaces
 {
-    public interface IGymUser : IBaseRepository<User>
+    public interface IAdminRepository : IBaseRepository<Admin>
     {
     }
 }

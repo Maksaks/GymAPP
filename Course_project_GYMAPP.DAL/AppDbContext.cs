@@ -13,11 +13,11 @@ namespace Course_project_GYMAPP.DAL
     {
 
         public DbSet<User> User { get; set; }
-        public DbSet<User> InGymUsers { get; set; }
+        
         public DbSet<Trainer> Trainer { get; set; }
         public DbSet<Admin> Admin { get; set; }
         public DbSet<PersonalCard> PersonalCards { get; set; }
-
+        public DbSet<InGymUser> InGymUser { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
         {
             Database.EnsureCreated();

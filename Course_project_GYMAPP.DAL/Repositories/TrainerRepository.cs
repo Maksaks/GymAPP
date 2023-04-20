@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Course_project_GYMAPP.DAL.Repositories
 {
-    public class TrainerRepository : ITrainer
+    public class TrainerRepository : ITrainerRepository
     {
         private readonly AppDbContext appDb;
 
