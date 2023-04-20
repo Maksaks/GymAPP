@@ -1,4 +1,5 @@
-﻿using Course_project_GYMAPP.Domain.Entity;
+﻿using Course_project_GYMAPP.DAL.Interfaces;
+using Course_project_GYMAPP.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Course_project_GYMAPP.DAL.Repositories
 {
-    public class InGymUserRepository
+    public class InGymUserRepository : IGymUser
     {
         private readonly AppDbContext appDb;
 

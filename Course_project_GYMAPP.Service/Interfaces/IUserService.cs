@@ -11,6 +11,7 @@ namespace Course_project_GYMAPP.Service.Interfaces
 {
     public interface IUserService
     {
+        public Task<IBaseResponse<bool>> CreateUser(UserViewModel userVM);
         public Task<IBaseResponse<IEnumerable<User>>> GetUsers();
         public Task<IBaseResponse<User>> GetUser(int id);
         public Task<IBaseResponse<User>> GetUserByName(string name);
