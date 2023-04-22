@@ -4,6 +4,7 @@ using Course_project_GYMAPP.DAL.Repositories;
 using Course_project_GYMAPP.Domain.Entity;
 using Course_project_GYMAPP.Service.Implementations;
 using Course_project_GYMAPP.Service.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,13 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+        options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+    });
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITrainerRepository, TrainerRepository>();
@@ -25,6 +33,7 @@ builder.Services.AddScoped<ITrainerService, TrainerService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IGymUserService, InGymUserService>();
 builder.Services.AddScoped<IPersonalCardService, PersonalCardService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 
 var app = builder.Build();
@@ -42,6 +51,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

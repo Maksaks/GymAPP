@@ -37,6 +37,11 @@ namespace Course_project_GYMAPP.DAL.Repositories
             return await appDb.Admin.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<Admin> GetByName(string Name)
+        {
+            return await appDb.Admin.FirstOrDefaultAsync(x => x.Name == Name);
+        }
+
         public async Task<List<Admin>> Select()
         {
             return await appDb.Admin.ToListAsync();

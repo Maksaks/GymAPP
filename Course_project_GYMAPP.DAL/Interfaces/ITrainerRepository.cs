@@ -9,6 +9,6 @@ namespace Course_project_GYMAPP.DAL.Interfaces
 {
     public interface ITrainerRepository : IBaseRepository<Trainer>
     {
-        Task<Trainer> GetByName(string Name);
+        public Task<Trainer> GetByName(string Name);
     }
 }

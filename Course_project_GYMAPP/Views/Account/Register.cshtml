@@ -1,0 +1,47 @@
+﻿@model Course_project_GYMAPP.Domain.ViewModels.UserRegisterViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Реєстрація";
+}
+
+<div style="padding: 20px;"></div>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <span class="anchor"></span>
+                    <div class="card card-account card-outline-secondary border border-white">
+                        <div class="card-header">
+                            <h3 class="mb-0 text-center paragraphHome text-black">Регистрация</h3>
+                        </div>
+                        <div class="card-body">
+                            <form asp-controller="Account" asp-action="Register">
+                                <div asp-validation-summary="All" style="font-size:23px; font-family:Impact" class="text-danger text-center"></div>
+                                <div class="form-group">
+                                    <input asp-for="Name" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="Age" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Вік" type="number">
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="Number" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Номер телефону" type="number">
+                                </div>
+                                <div class="form-group">
+                                    <input autocomplete="new-password" asp-for="Password" placeholder="Пароль" class="mb-3 form-control textbox-dg font-weight-bold text-center" type="password">
+                                </div>
+                                <span class="text-black" style="font-size: small; font-family:'Comic Sans MS'">Пароль має бути понад 6 символів</span>
+                                <div class="form-group">
+                                    <input autocomplete="new-password" asp-for="ConfirmPassword" placeholder="Підтвердіть пароль" class="form-control mb-3 textbox-dg font-weight-bold text-center" type="password">
+                                </div>
+                                <button class="btn btn-success btn-lg float-md-none mb-3" type="submit">Зареєструватися</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

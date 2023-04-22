@@ -9,5 +9,6 @@ namespace Course_project_GYMAPP.DAL.Interfaces
 {
     public interface IAdminRepository : IBaseRepository<Admin>
     {
+        public Task<Admin> GetByName(string Name);
     }
 }

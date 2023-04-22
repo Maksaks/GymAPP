@@ -12,12 +12,10 @@ namespace Course_project_GYMAPP.Controllers
 
         public HomeController(IGymUserRepository gymUserRepository)
         {
-            this.gymUserRepository = gymUserRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            await gymUserRepository.Select();
             return View();
         }
 
