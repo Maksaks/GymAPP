@@ -1,4 +1,5 @@
-﻿using Course_project_GYMAPP.Domain.Response;
+﻿
+using Course_project_GYMAPP.Domain.Response;
 using Course_project_GYMAPP.Domain.ViewModels;
 using System;
 using System.Collections.Generic;

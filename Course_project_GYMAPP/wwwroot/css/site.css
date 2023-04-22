@@ -58,7 +58,7 @@
         text-decoration: none;
     }
 
-    nav li:hover {
+    av li:hover {
         font-weight: bold;
         background-color: #8d8d8d;
         text-transform: uppercase;
@@ -71,16 +71,6 @@
         color: white;
         font-size: 20px;
         border-top: 5px solid #252525;
-    }
-
-    footer a {
-        text-decoration: none;
-        color: white;
-    }
-
-    footer a:hover {
-        text-decoration: none;
-        color: red;
     }
 }
 
@@ -159,15 +149,5 @@
         color: white;
         font-size: 20px;
         border-top: 5px solid #252525;
-    }
-
-    footer a {
-        text-decoration: none;
-        color: white;
-    }
-
-    footer a:hover {
-        text-decoration: none;
-        color: red;
     }
 }

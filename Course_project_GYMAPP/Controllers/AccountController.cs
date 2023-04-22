@@ -58,6 +58,7 @@ namespace Course_project_GYMAPP.Controllers
             return View(model);
         }
 
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {

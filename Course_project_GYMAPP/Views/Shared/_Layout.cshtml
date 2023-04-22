@@ -12,8 +12,9 @@
     <header>
         <h1 class="header">
         FERRUM GYM
-    </h1>
-    <nav>
+        </h1>
+    <nav id="mynav">
+        
         <ul>
             <li>
                 <a asp-area="" asp-controller="Home" asp-action="Index">Головна сторінка</a>
@@ -22,15 +23,39 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index">Інструктори</a>
             </li>
             <li>
-                <a asp-area="" asp-controller="Home" asp-action="Index">Клубні картки</a>
+                <a asp-area="" asp-controller="Card" asp-action="Index">Клубні картки</a>
             </li>
             <li>
                 <a asp-area="" asp-controller="Home" asp-action="Index">Контакти</a>
             </li>
-            <li>
-                <a asp-area="" asp-controller="Account" asp-action="Login">Вхід</a>
-            </li>
-        </ul>
+            
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <form method="post" asp-controller="Account" asp-action="Logout">
+                            <input type="submit" value="Вихід" />
+                        </form>
+                    </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="Index">Налаштування</a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Trainer"))
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="Index">Відвідувачі</a>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li>
+                        <a asp-area="" asp-controller="Account" asp-action="Login">Вхід</a>
+                    </li>
+                }
+            </ul>
     </nav>
     </header>
     <div class="container">

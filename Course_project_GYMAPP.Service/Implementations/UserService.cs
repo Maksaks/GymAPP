@@ -22,7 +22,7 @@ namespace Course_project_GYMAPP.Service.Implementations
             this._userRepository = userRepository;
         }
 
-        public async Task<IBaseResponse<User>> GetUser(int id)
+        public async Task<BaseResponse<User>> GetUser(int id)
         {
             var baseResponse = new BaseResponse<User>();
             try
@@ -35,7 +35,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                     return baseResponse;
                 }
                 baseResponse.Data = user;
-                baseResponse.StatusCode = StatusCode.InternalServerError;
+                baseResponse.StatusCode = StatusCode.OK;
                 return baseResponse;
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 };
             }
         }
-        public async Task<IBaseResponse<User>> GetUserByName(string name)
+        public async Task<BaseResponse<User>> GetUserByName(string name)
         {
             var baseResponse = new BaseResponse<User>();
             try
@@ -60,7 +60,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                     return baseResponse;
                 }
                 baseResponse.Data = user;
-                baseResponse.StatusCode = StatusCode.InternalServerError;
+                baseResponse.StatusCode = StatusCode.OK;
                 return baseResponse;
             }
             catch (Exception ex)
@@ -72,7 +72,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 };
             }
         }
-        public async Task<IBaseResponse<IEnumerable<User>>> GetUsers()
+        public async Task<BaseResponse<IEnumerable<User>>> GetUsers()
         {
             var baseResponse = new BaseResponse<IEnumerable<User>>();
             try
@@ -85,7 +85,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                     return baseResponse;
                 }
                 baseResponse.Data = users;
-                baseResponse.StatusCode = StatusCode.InternalServerError;
+                baseResponse.StatusCode = StatusCode.OK;
                 return baseResponse;
             }
             catch(Exception ex) 
@@ -98,7 +98,7 @@ namespace Course_project_GYMAPP.Service.Implementations
             }
         }
 
-        public async Task<IBaseResponse<bool>> DeleteUser(int id)
+        public async Task<BaseResponse<bool>> DeleteUser(int id)
         {
             var baseResponse = new BaseResponse<bool>();
             try
@@ -125,7 +125,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 };
             }
         }
-        public async Task<IBaseResponse<bool>> CreateUser(UserViewModel userVM)
+        public async Task<BaseResponse<bool>> CreateUser(UserViewModel userVM)
         {
             var baseResponse = new BaseResponse<bool>();
             try
@@ -155,7 +155,7 @@ namespace Course_project_GYMAPP.Service.Implementations
             }
         }
 
-        public async Task<IBaseResponse<User>> EditUser(int id, UserViewModel userVM)
+        public async Task<BaseResponse<User>> EditUser(int id, UserViewModel userVM)
         {
             var baseResponse = new BaseResponse<User>();
             try
@@ -178,6 +178,41 @@ namespace Course_project_GYMAPP.Service.Implementations
 
                 baseResponse.Data = await _userRepository.Update(user);
                 baseResponse.Description = "Інформацію про користувача оновлено";
+                baseResponse.StatusCode = StatusCode.OK;
+                return baseResponse;
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<User>()
+                {
+                    Description = $"[EditUser] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+        public async Task<BaseResponse<User>> EditUserCard(User user, PersonalCard card)
+        {
+            var baseResponse = new BaseResponse<User>();
+            try
+            {
+                if (user == null)
+                {
+                    baseResponse.Description = "Необхідно авторизуватися";
+                    baseResponse.StatusCode = StatusCode.OK;
+                    return baseResponse;
+                }
+                if(user.CardBefore < DateTime.Today)
+                {
+                    user.CardBefore = DateTime.Today.AddDays(Convert.ToDouble(card.Duration));
+                }
+                else
+                {
+                    user.CardBefore = user.CardBefore.AddDays(Convert.ToDouble(card.Duration));
+                }
+                
+
+                baseResponse.Data = await _userRepository.Update(user);
+                baseResponse.Description = "Інформацію про термін дії клубної картки оновлено";
                 baseResponse.StatusCode = StatusCode.OK;
                 return baseResponse;
             }
