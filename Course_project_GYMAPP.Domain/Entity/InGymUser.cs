@@ -8,5 +8,6 @@ namespace Course_project_GYMAPP.Domain.Entity
 {
     public class InGymUser : BaseUser
     {
+        public DateTime timeInGym { get; set; }
     }
 }
