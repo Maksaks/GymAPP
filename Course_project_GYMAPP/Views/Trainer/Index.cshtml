@@ -1,0 +1,39 @@
+﻿@model List<Course_project_GYMAPP.Domain.Entity.InGymUser>
+
+@{
+    ViewData["Title"] = "Відвідувачі";
+}
+
+<div asp-validation-summary="All" class="alert alert-success m-5" role="alert"></div>
+<form asp-action="AddGymUser" asp-controller="Trainer" class="m-5" method="post">
+    <div class="input-group">
+        <input name="name" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="input-group-button-right">
+        <button type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Button</button>
+    </div>
+</form>
+
+<table class="table table-hover" class="m-5">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">NAME</th>
+            <th scope="col">IN GYM FROM TIME</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.Id</th>
+                <td>@item.Name</td>
+                <td>@item.timeInGym</td>
+                <td>
+                    <form asp-action="DeleteGymUser" asp-controller="Trainer" method="post" asp-route-id="@item.Id">
+                        <button type="submit" class="btn btn-success">Видалити</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

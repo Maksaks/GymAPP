@@ -37,6 +37,11 @@ namespace Course_project_GYMAPP.DAL.Repositories
             return await appDb.InGymUser.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<InGymUser> GetByName(string Name)
+        {
+            return await appDb.InGymUser.FirstOrDefaultAsync(x => x.Name == Name);
+        }
+
         public async Task<List<InGymUser>> Select()
         {
             return await appDb.InGymUser.ToListAsync();

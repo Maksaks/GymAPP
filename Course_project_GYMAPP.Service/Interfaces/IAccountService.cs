@@ -16,6 +16,6 @@ namespace Course_project_GYMAPP.Service.Interfaces
 
         Task<BaseResponse<ClaimsIdentity>> Login(UserLoginViewModel model);
 
-        Task<BaseResponse<bool>> EditUserData(UserEditDataViewModel model);
+        Task<BaseResponse<bool>> EditUserData(string lastname, UserEditDataViewModel model);
     }
 }

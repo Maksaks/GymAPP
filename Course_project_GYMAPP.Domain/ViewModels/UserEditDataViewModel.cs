@@ -19,15 +19,5 @@ namespace Course_project_GYMAPP.Domain.ViewModels
         [Display(Name = "Введіть вік")]
         [Required(ErrorMessage = "Обов'язкове поле")]
         public int Age { get; set; }
-
-        [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Вкажіть пароль")]
-        [MinLength(6, ErrorMessage = "Пароль должен иметь длину больше 6 символов")]
-        public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Підтвердіть пароль")]
-        [Compare("Password", ErrorMessage = "Пароли не співпадають")]
-        public string ConfirmPassword { get; set; }
     }
 }

@@ -30,9 +30,44 @@ namespace Course_project_GYMAPP.Service.Implementations
             this.adminRepository = adminRepository;
         }
 
-        public async Task<BaseResponse<bool>> EditUserData(UserEditDataViewModel model)
+        public async Task<BaseResponse<bool>> EditUserData(string lastname, UserEditDataViewModel model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = new BaseUser();
+                if(lastname != model.Name)
+                {
+                    user = await CheckName(model.Name);
+                    if (user != null)
+                    {
+                        return new BaseResponse<bool>()
+                        {
+                            Data = false,
+                            Description = "Це ім'я вже зайнято",
+                            StatusCode = StatusCode.ChangeName
+                        };
+                    }
+                }
+                var eduser = await userRepository.GetByName(lastname);
+                eduser.Name = model.Name;
+                eduser.Age= model.Age;
+                eduser.Number = model.Number;
+                await userRepository.Update(eduser);
+                return new BaseResponse<bool>()
+                {
+                    Data= true,
+                    Description = "Дані оновлено",
+                    StatusCode = StatusCode.OK
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>()
+                {
+                    Description = $"[Login] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
         }
 
         public async Task<BaseResponse<ClaimsIdentity>> Login(UserLoginViewModel model)

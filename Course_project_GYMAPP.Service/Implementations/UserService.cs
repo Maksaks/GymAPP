@@ -88,7 +88,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 baseResponse.StatusCode = StatusCode.OK;
                 return baseResponse;
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 return new BaseResponse<IEnumerable<User>>()
                 {
@@ -110,7 +110,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                     baseResponse.StatusCode = StatusCode.UserNotFound;
                     return baseResponse;
                 }
-                
+
                 baseResponse.Data = await _userRepository.Delete(user);
                 baseResponse.Description = "Користувача видалено";
                 baseResponse.StatusCode = StatusCode.OK;
@@ -125,7 +125,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 };
             }
         }
-        public async Task<BaseResponse<bool>> CreateUser(UserViewModel userVM)
+        public async Task<BaseResponse<bool>> CreateUser(UserRegisterViewModel userVM)
         {
             var baseResponse = new BaseResponse<bool>();
             try
@@ -155,14 +155,14 @@ namespace Course_project_GYMAPP.Service.Implementations
             }
         }
 
-        public async Task<BaseResponse<User>> EditUser(int id, UserViewModel userVM)
+        public async Task<BaseResponse<User>> EditUser(int id, UserEditDataViewModel userVM)
         {
             var baseResponse = new BaseResponse<User>();
             try
             {
                 var user = await _userRepository.Get(id);
 
-                if(user == null)
+                if (user == null)
                 {
                     baseResponse.Description = "Користувача не знайдено";
                     baseResponse.StatusCode = StatusCode.UserNotFound;
@@ -170,11 +170,8 @@ namespace Course_project_GYMAPP.Service.Implementations
                 }
 
                 user.Name = userVM.Name;
-                user.Password = userVM.Password;
                 user.Age = userVM.Age;
                 user.Number = userVM.Number;
-                user.CardBefore = userVM.CardBefore;
-                user.LastVisit = userVM.LastVisit;
 
                 baseResponse.Data = await _userRepository.Update(user);
                 baseResponse.Description = "Інформацію про користувача оновлено";
@@ -201,7 +198,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                     baseResponse.StatusCode = StatusCode.OK;
                     return baseResponse;
                 }
-                if(user.CardBefore < DateTime.Today)
+                if (user.CardBefore < DateTime.Today)
                 {
                     user.CardBefore = DateTime.Today.AddDays(Convert.ToDouble(card.Duration));
                 }
@@ -209,7 +206,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 {
                     user.CardBefore = user.CardBefore.AddDays(Convert.ToDouble(card.Duration));
                 }
-                
+
 
                 baseResponse.Data = await _userRepository.Update(user);
                 baseResponse.Description = "Інформацію про термін дії клубної картки оновлено";

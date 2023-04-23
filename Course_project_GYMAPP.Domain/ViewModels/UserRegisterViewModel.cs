@@ -21,7 +21,7 @@ namespace Course_project_GYMAPP.Domain.ViewModels
 
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Вкажіть пароль")]
-        [MinLength(6, ErrorMessage = "Пароль должен иметь длину больше 6 символов")]
+        [MinLength(8, ErrorMessage = "Пароль повинен мати довжину понад 8 символів")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]

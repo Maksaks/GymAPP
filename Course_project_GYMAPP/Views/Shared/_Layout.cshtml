@@ -36,6 +36,12 @@
                             <input type="submit" value="Вихід" />
                         </form>
                     </li>
+                    @if (User.IsInRole("User"))
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Account" asp-action="EditProfile">Профіль</a>
+                        </li>
+                    }
                     @if (User.IsInRole("Admin"))
                     {
                         <li>
@@ -45,7 +51,7 @@
                     @if (User.IsInRole("Trainer"))
                     {
                         <li>
-                            <a asp-area="" asp-controller="Home" asp-action="Index">Відвідувачі</a>
+                            <a asp-area="" asp-controller="Trainer" asp-action="Index">Відвідувачі</a>
                         </li>
                     }
                 }
