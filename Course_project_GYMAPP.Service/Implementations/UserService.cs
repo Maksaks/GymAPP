@@ -141,7 +141,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                     DateReg = DateTime.Now
                 };
                 baseResponse.Data = await _userRepository.Create(user);
-                baseResponse.Description = "Користувача додано";
+                baseResponse.Description = "Користувача зареєстровано";
                 baseResponse.StatusCode = StatusCode.OK;
                 return baseResponse;
             }

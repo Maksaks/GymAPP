@@ -5,12 +5,20 @@
 }
 
 <div asp-validation-summary="All" class="alert alert-success m-5" role="alert"></div>
-<form asp-action="AddGymUser" asp-controller="Trainer" class="m-5" method="post">
-    <div class="input-group">
-        <input name="name" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="input-group-button-right">
-        <button type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Button</button>
+
+<div class="row">
+    <div class="col-sm-3">
+        <a asp-action="Register" asp-controller="Trainer" type="button" class="btn btn-outline-secondary" id="input-group-button-right">Новий користувач</a>
     </div>
-</form>
+    <div class="col-sm-5">
+        <form asp-action="AddGymUser" asp-controller="Trainer" method="post">
+            <div class="input-group">
+                <input name="name" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="input-group-button-right">
+                <button type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Додати</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <table class="table table-hover" class="m-5">
     <thead>
