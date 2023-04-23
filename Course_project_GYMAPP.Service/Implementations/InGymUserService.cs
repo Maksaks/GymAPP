@@ -31,22 +31,41 @@ namespace Course_project_GYMAPP.Service.Implementations
             try
             {
                 var user = await userRepository.GetByName(Name);
-                if (user != null && await gymUserRepository.GetByName(Name) == null)
+                if (user != null)
                 {
-                    var gymUser = new InGymUser()
+                    if(await gymUserRepository.GetByName(Name) == null)
                     {
-                        Name = user.Name,
-                        timeInGym = DateTime.Now,
-                        Password = user.Password
-                    };
-                    baseResponse.Data = await gymUserRepository.Create(gymUser);
-                    baseResponse.Description = "Відвідувача додано";
-                    baseResponse.StatusCode = StatusCode.OK;
-                    return baseResponse;
+                        if (user.CardBefore >= DateTime.Today)
+                        {
+                            var gymUser = new InGymUser()
+                            {
+                                Name = user.Name,
+                                timeInGym = DateTime.Now,
+                                Password = user.Password
+                            };
+                            baseResponse.Data = await gymUserRepository.Create(gymUser);
+                            baseResponse.Description = "Відвідувача додано";
+                            baseResponse.StatusCode = StatusCode.OK;
+                            return baseResponse;
+                        }
+                        else
+                        {
+                            baseResponse.Description = "Термін дії клубної картки відвідувача закінчився " + user.CardBefore.ToString();
+                            baseResponse.StatusCode = StatusCode.UserNotFound;
+                            return baseResponse;
+                        }
+                    }
+                    else
+                    {
+                        baseResponse.Description = "Наразі відвідувач вже знаходиться у залі";
+                        baseResponse.StatusCode = StatusCode.UserNotFound;
+                        return baseResponse;
+                    }
+                    
                 }
                 else
                 {
-                    baseResponse.Description = "Користувача не знайдено або вже додано";
+                    baseResponse.Description = "Користувача не знайдено";
                     baseResponse.StatusCode = StatusCode.UserNotFound;
                     return baseResponse;
                 }
