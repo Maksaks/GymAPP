@@ -11,11 +11,11 @@ namespace Course_project_GYMAPP.Service.Interfaces
 {
     public interface ITrainerService
     {
-        public Task<BaseResponse<bool>> CreateTrainer(TrainerRegisterViewModel userVM);
+        public Task<BaseResponse<bool>> CreateTrainer(TrainerRegisterViewModel trainerVM);
         public Task<BaseResponse<IEnumerable<Trainer>>> GetTrainers();
         public Task<BaseResponse<Trainer>> GetTrainer(int id);
         public Task<BaseResponse<Trainer>> GetTrainerByName(string name);
         public Task<BaseResponse<bool>> DeleteTrainer(int id);
-        public Task<BaseResponse<Trainer>> EditTrainer(int id, TrainerEditViewModel userVM);
+        public Task<BaseResponse<Trainer>> EditTrainer(int id, TrainerEditViewModel trainerVM);
     }
 }

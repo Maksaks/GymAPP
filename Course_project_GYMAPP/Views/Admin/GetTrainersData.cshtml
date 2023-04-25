@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Course_project_GYMAPP.Domain.Entity.Trainer>
+
+<table class="table table-hover">
+<thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Ім'я</th>
+        <th scope="col">Вік</th>
+        <th scope="col">Номер</th>
+        <th scope="col">Детальна інформація</th>
+        <th scope="col">Зображення</th>
+    </tr>
+</thead>
+<tbody>
+        @foreach (var user in Model)
+        {
+                <tr>
+                    <th scope="row">@user.Id</th>
+                    <td>@user.Name</td>
+                    <td>@user.Age</td>
+                    <td>@user.Number</td>
+                    <td>@user.AboutInfo</td>
+                    <td>@user.ImgPath</td>
+                    <td>@user.Password</td>
+                </tr>
+        }
+
+</tbody>
+</table>

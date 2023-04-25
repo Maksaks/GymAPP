@@ -11,7 +11,7 @@ namespace Course_project_GYMAPP.Service.Interfaces
 {
     public interface IAdminService
     {
-        public Task<BaseResponse<bool>> CreateAdmin(AdminRegisterViewModel userVM);
+        public Task<BaseResponse<bool>> CreateAdmin(AdminRegisterViewModel adminVM);
         public Task<BaseResponse<IEnumerable<Admin>>> GetAdmins();
         public Task<BaseResponse<Admin>> GetAdmin(int id);
         public Task<BaseResponse<Admin>> GetAdminByName(string name);
