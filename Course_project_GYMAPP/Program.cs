@@ -1,3 +1,4 @@
+using AspNetCore.Unobtrusive.Ajax;
 using Course_project_GYMAPP.DAL;
 using Course_project_GYMAPP.DAL.Interfaces;
 using Course_project_GYMAPP.DAL.Repositories;
@@ -34,7 +35,7 @@ builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IGymUserService, InGymUserService>();
 builder.Services.AddScoped<IPersonalCardService, PersonalCardService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-
+builder.Services.AddUnobtrusiveAjax();
 
 var app = builder.Build();
 
@@ -46,8 +47,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseUnobtrusiveAjax();
 
 app.UseRouting();
 

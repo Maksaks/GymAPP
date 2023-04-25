@@ -8,8 +8,6 @@ namespace Course_project_GYMAPP.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IGymUserRepository gymUserRepository;
-
         public HomeController(IGymUserRepository gymUserRepository)
         {
         }

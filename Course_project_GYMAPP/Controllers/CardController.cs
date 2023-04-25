@@ -14,6 +14,7 @@ namespace Course_project_GYMAPP.Controllers
             this.userService = userService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -31,13 +32,14 @@ namespace Course_project_GYMAPP.Controllers
                     var resp = await userService.EditUserCard(user, card);
                     ModelState.AddModelError("", resp.Description);
                 }
-                else if (!User.IsInRole("User"))
+                else if (!User.IsInRole("User") && User.Identity.IsAuthenticated)
                 {
                     ModelState.AddModelError("", "Вам не потрібен абонемент");
                 }
                 else
                 {
                     ModelState.AddModelError("", "Необхідно авторизуватися");
+                    return RedirectToAction("Register", "Account");
                 }
             }
             return View();
