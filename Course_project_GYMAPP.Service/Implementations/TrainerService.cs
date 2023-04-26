@@ -1,5 +1,6 @@
 ﻿using Course_project_GYMAPP.DAL.Interfaces;
 using Course_project_GYMAPP.DAL.Repositories;
+using Course_project_GYMAPP.Domain.Encryption;
 using Course_project_GYMAPP.Domain.Entity;
 using Course_project_GYMAPP.Domain.Enum;
 using Course_project_GYMAPP.Domain.Response;
@@ -32,8 +33,8 @@ namespace Course_project_GYMAPP.Service.Implementations
                     Password = trainerVM.Password,
                     Age = trainerVM.Age,
                     Number = trainerVM.Number,
-                    ImgPath= trainerVM.ImgPath,
-                    AboutInfo= trainerVM.AboutInfo,
+                    ImgPath = trainerVM.ImgPath,
+                    AboutInfo = trainerVM.AboutInfo,
                     DateReg = DateTime.Now
                 };
                 baseResponse.Data = await trainerRepository.Create(trainer);
@@ -187,6 +188,45 @@ namespace Course_project_GYMAPP.Service.Implementations
                 return new BaseResponse<IEnumerable<Trainer>>()
                 {
                     Description = $"[GetTrainers] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+
+        public async Task<BaseResponse<bool>> EditTrainer(AdminEditTrainerViewModel userVM)
+        {
+            var baseResponse = new BaseResponse<bool>();
+            try
+            {
+                var user = await trainerRepository.Get(userVM.ID);
+
+                if (user == null)
+                {
+                    baseResponse.Description = "Тренера не знайдено";
+                    baseResponse.StatusCode = StatusCode.UserNotFound;
+                    return baseResponse;
+                }
+
+                user.Name = userVM.Name;
+                user.Age = userVM.Age;
+                user.Number = userVM.Number;
+                user.ImgPath = userVM.ImgPath;
+                user.AboutInfo = userVM.AboutInfo;
+                if (userVM.Password != null)
+                {
+                    user.Password = Encryption.EncrPassowrd(userVM.Password);
+                }
+
+                await trainerRepository.Update(user);
+                baseResponse.Description = "Інформацію про тренера оновлено";
+                baseResponse.StatusCode = StatusCode.OK;
+                return baseResponse;
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>()
+                {
+                    Description = $"[EditTrainer] : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError
                 };
             }

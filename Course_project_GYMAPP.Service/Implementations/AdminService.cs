@@ -1,5 +1,6 @@
 ﻿using Course_project_GYMAPP.DAL.Interfaces;
 using Course_project_GYMAPP.DAL.Repositories;
+using Course_project_GYMAPP.Domain.Encryption;
 using Course_project_GYMAPP.Domain.Entity;
 using Course_project_GYMAPP.Domain.Enum;
 using Course_project_GYMAPP.Domain.Response;
@@ -147,6 +148,42 @@ namespace Course_project_GYMAPP.Service.Implementations
                 return new BaseResponse<IEnumerable<Admin>>()
                 {
                     Description = $"[GetAdmins] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+
+        public async Task<BaseResponse<bool>> EditAdmin(AdminEditAdminViewModel userVM)
+        {
+            var baseResponse = new BaseResponse<bool>();
+            try
+            {
+                var user = await adminRepository.Get(userVM.ID);
+
+                if (user == null)
+                {
+                    baseResponse.Description = "Адміна не знайдено";
+                    baseResponse.StatusCode = StatusCode.UserNotFound;
+                    return baseResponse;
+                }
+
+                user.Name = userVM.Name;
+                
+                if (userVM.Password != null)
+                {
+                    user.Password = Encryption.EncrPassowrd(userVM.Password);
+                }
+
+                await adminRepository.Update(user);
+                baseResponse.Description = "Інформацію про адміна оновлено";
+                baseResponse.StatusCode = StatusCode.OK;
+                return baseResponse;
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>()
+                {
+                    Description = $"[EditAdmin] : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError
                 };
             }

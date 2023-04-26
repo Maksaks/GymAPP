@@ -92,6 +92,66 @@ namespace Course_project_GYMAPP.Controllers
             return PartialView("GetUser", userVM);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetTrainer(int id)
+        {
+            var resp = await trainerService.GetTrainer(id);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            var trainer = resp.Data;
+            var trainerVM = new AdminEditTrainerViewModel()
+            {
+                ID = trainer.Id,
+                Name = trainer.Name,
+                Age = trainer.Age,
+                Number = trainer.Number,
+                ImgPath = trainer.ImgPath,
+                AboutInfo = trainer.AboutInfo,
+                Password = "",
+                ConfirmPassword = ""
+            };
+            return PartialView("GetTrainer", trainerVM);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPersonalCard(int id)
+        {
+            var resp = await personalCardService.GetPersonalCard(id);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            var card = resp.Data;
+            var cardVM = new AdminEditPersonalCardViewModel()
+            {
+                ID = card.ID,
+                Name = card.Name,
+                Duration = card.Duration,
+                Price= card.Price
+            };
+            return PartialView("GetPersonalCard", cardVM);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAdmin(int id)
+        {
+            var resp = await adminService.GetAdmin(id);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            var admin = resp.Data;
+            var adminVM = new AdminEditAdminViewModel()
+            {
+                ID = admin.Id,
+                Name = admin.Name,
+                Password= admin.Password
+            };
+            return PartialView("GetAdmin", adminVM);
+        }
+
         [HttpPost]
         public async Task<IActionResult> EditUser(AdminEditUserViewModel userVM)
         {
@@ -106,10 +166,89 @@ namespace Course_project_GYMAPP.Controllers
             }
             return RedirectToAction("Index", "Admin");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditPersonalCard(AdminEditPersonalCardViewModel cardVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var resp = await personalCardService.EditPersonalCard(cardVM);
+                if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction("Index", "Admin");
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAdmin(AdminEditAdminViewModel adminVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var resp = await adminService.EditAdmin(adminVM);
+                if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction("Index", "Admin");
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditTrainer(AdminEditTrainerViewModel trainerVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var resp = await trainerService.EditTrainer(trainerVM);
+                if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction("Index", "Admin");
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+
         [HttpPost]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var resp = await userService.DeleteUser(id);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteAdmin(int id)
+        {
+            var resp = await adminService.DeleteAdmin(id);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteTrainer(int id)
+        {
+            var resp = await trainerService.DeleteTrainer(id);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePersonalCard(int id)
+        {
+            var resp = await personalCardService.DeletePersonalCard(id);
             if (resp.StatusCode != Domain.Enum.StatusCode.OK)
             {
                 return NotFound();

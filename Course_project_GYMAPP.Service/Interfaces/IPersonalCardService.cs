@@ -16,5 +16,6 @@ namespace Course_project_GYMAPP.Service.Interfaces
         public Task<BaseResponse<PersonalCard>> GetPersonalCard(int id);
         public Task<BaseResponse<bool>> DeletePersonalCard(int id);
         public Task<BaseResponse<PersonalCard>> EditPersonalCard(int id, PersonalCardViewModel cardVM);
+        public Task<BaseResponse<bool>> EditPersonalCard(AdminEditPersonalCardViewModel userVM);
     }
 }

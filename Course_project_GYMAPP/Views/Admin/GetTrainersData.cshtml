@@ -7,8 +7,10 @@
         <th scope="col">Ім'я</th>
         <th scope="col">Вік</th>
         <th scope="col">Номер</th>
-        <th scope="col">Детальна інформація</th>
+        <th scope="col" class="w-100 text-wrap">Детальна інформація</th>
         <th scope="col">Зображення</th>
+        <th scope="col"> </th>
+        <th scope="col"> </th>
     </tr>
 </thead>
 <tbody>
@@ -21,7 +23,12 @@
                     <td>@user.Number</td>
                     <td>@user.AboutInfo</td>
                     <td>@user.ImgPath</td>
-                    <td>@user.Password</td>
+                    <td><button type="submit" class="btn btn-outline-secondary" id="input-group-button-right" onclick="showModal('../Admin/GetTrainer', @user.Id)">Редагувати</button></td>
+                    <td>
+                        <form method="post" asp-controller="Admin" asp-action="DeleteTrainer" asp-route-id="@user.Id">
+                            <button type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Видалити</button>
+                            </form>
+                    </td>
                 </tr>
         }
 

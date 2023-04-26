@@ -3,8 +3,10 @@
 <table class="table table-hover">
 <thead>
     <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Ім'я</th>
+        <th scope="col" class="col-2">ID</th>
+        <th scope="col" class="col-8">Ім'я</th>
+        <th scope="col" class="col-1"> </th>
+        <th scope="col" class="col-1"> </th>
     </tr>
 </thead>
 <tbody>
@@ -13,6 +15,12 @@
                     <tr>
                         <th scope="row">@user.Id</th>
                         <td>@user.Name</td>
+                            <td><button type="submit" class="btn btn-outline-secondary" id="input-group-button-right" onclick="showModal('../Admin/GetAdmin', @user.Id)">Редагувати</button></td>
+                        <td>
+                            <form method="post" asp-controller="Admin" asp-action="DeleteAdmin" asp-route-id="@user.Id">
+                                <button type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Видалити</button>
+                            </form>
+                        </td>
                     </tr>
         }
 

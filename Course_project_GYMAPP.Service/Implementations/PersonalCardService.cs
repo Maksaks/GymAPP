@@ -1,5 +1,6 @@
 ﻿using Course_project_GYMAPP.DAL.Interfaces;
 using Course_project_GYMAPP.DAL.Repositories;
+using Course_project_GYMAPP.Domain.Encryption;
 using Course_project_GYMAPP.Domain.Entity;
 using Course_project_GYMAPP.Domain.Enum;
 using Course_project_GYMAPP.Domain.Response;
@@ -156,6 +157,39 @@ namespace Course_project_GYMAPP.Service.Implementations
                 return new BaseResponse<IEnumerable<PersonalCard>>()
                 {
                     Description = $"[GetPersonalCards] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+
+        public async Task<BaseResponse<bool>> EditPersonalCard(AdminEditPersonalCardViewModel userVM)
+        {
+            var baseResponse = new BaseResponse<bool>();
+            try
+            {
+                var user = await personalCardRepository.Get(userVM.ID);
+
+                if (user == null)
+                {
+                    baseResponse.Description = "Клубну картку не знайдено";
+                    baseResponse.StatusCode = StatusCode.UserNotFound;
+                    return baseResponse;
+                }
+
+                user.Name = userVM.Name;
+                user.Duration = userVM.Duration;
+                user.Price = userVM.Price;
+
+                await personalCardRepository.Update(user);
+                baseResponse.Description = "Інформацію про клубну картку оновлено";
+                baseResponse.StatusCode = StatusCode.OK;
+                return baseResponse;
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>()
+                {
+                    Description = $"[EditPersonalCard] : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError
                 };
             }

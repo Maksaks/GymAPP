@@ -1,0 +1,20 @@
+﻿@model Course_project_GYMAPP.Domain.ViewModels.AdminEditAdminViewModel
+
+
+<form method="post" asp-controller="Admin" asp-action="EditUser">
+    <input asp-for="ID" hidden/>
+    <div asp-validation-summary="All" style="font-size:23px; font-family:Impact" class="text-danger text-center"></div>
+    <div class="form-group">
+        <input asp-for="Name" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я" type="text">
+    </div>
+    <div class="form-group">
+        <input autocomplete="new-password" asp-for="Password" placeholder="Пароль" class="mb-3 form-control textbox-dg font-weight-bold text-center" type="password">
+    </div>
+    <span class="text-black" style="font-size: small; font-family:'Comic Sans MS'">Пароль має бути понад 8 символів</span>
+    <div class="form-group">
+        <input autocomplete="new-password" asp-for="ConfirmPassword" placeholder="Підтвердіть пароль" class="form-control mb-3 textbox-dg font-weight-bold text-center" type="password">
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Зберегти зміни</button>
+    </div>
+</form>
