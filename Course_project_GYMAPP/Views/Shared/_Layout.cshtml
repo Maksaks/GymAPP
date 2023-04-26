@@ -79,6 +79,48 @@
     </footer>
 
 
+    <div class="modal" id="modal" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen-md-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalFullscreenSizeLabel">Редагування</h5>
+                    <button type="button" class="btn-close" aria-label="Закрыть" onclick="hideModal()"></button>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showModal(action, id) {
+
+            if (action === undefined || id == undefined) {
+                alert('Помилка')
+                return;
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: action,
+                data: {"id" : id},
+                success: function (response) {
+                    $('#modal').find(".modal-body").html(response);
+                    $('#modal').modal('show')
+                },
+                failure: function () {
+                    $('#modal').modal('hide')
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        };
+
+        function hideModal(){
+            $('#modal').modal('hide')
+        }
+    </script>
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>

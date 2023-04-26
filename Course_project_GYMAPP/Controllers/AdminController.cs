@@ -1,4 +1,5 @@
 ﻿using AspNetCore.Unobtrusive.Ajax;
+using Course_project_GYMAPP.Domain.ViewModels;
 using Course_project_GYMAPP.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,42 +28,93 @@ namespace Course_project_GYMAPP.Controllers
         [HttpPost]
         public async Task<IActionResult> GetUsersData()
         {
-            var users = (await userService.GetUsers()).Data;
-            if (users == null)
+            var resp = await userService.GetUsers();
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
             {
                 return NotFound();
             }
+            var users = resp.Data;
             return PartialView("GetUsersData", users);
         }
         [HttpPost]
         public async Task<IActionResult> GetAdminsData()
         {
-            var admins = (await adminService.GetAdmins()).Data;
-            if (admins == null)
+            var resp = await adminService.GetAdmins();
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
             {
                 return NotFound();
             }
+            var admins = resp.Data;
             return PartialView("GetAdminsData", admins);
         }
         [HttpPost]
         public async Task<IActionResult> GetTrainersData()
         {
-            var trainers = (await trainerService.GetTrainers()).Data;
-            if (trainers == null)
+            var resp = await trainerService.GetTrainers();
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
             {
                 return NotFound();
             }
+            var trainers = resp.Data;
             return PartialView("GetTrainersData", trainers);
         }
         [HttpPost]
         public async Task<IActionResult> GetPersonalCardsData()
         {
-            var cards = (await personalCardService.GetPersonalCards()).Data;
-            if (cards == null)
+            var resp = await personalCardService.GetPersonalCards();
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
             {
                 return NotFound();
             }
+            var cards = resp.Data;
             return PartialView("GetPersonalCardsData", cards);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUser(int id)
+        {
+            var resp = await userService.GetUser(id);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            var user = resp.Data;
+            var userVM = new AdminEditUserViewModel()
+            {
+                ID = user.Id,
+                Name = user.Name,
+                Age= user.Age,
+                Number= user.Number,
+                CardBefore = user.CardBefore,
+                Password = "",
+                ConfirmPassword = ""
+            };
+            return PartialView("GetUser", userVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(AdminEditUserViewModel userVM)
+        {
+            if(ModelState.IsValid)
+            {
+                var resp = await userService.EditUser(userVM);
+                if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction("Index", "Admin");
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var resp = await userService.DeleteUser(id);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Index", "Admin");
         }
     }
 }

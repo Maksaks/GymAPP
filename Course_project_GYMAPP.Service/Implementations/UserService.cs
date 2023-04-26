@@ -1,4 +1,5 @@
 ﻿using Course_project_GYMAPP.DAL.Interfaces;
+using Course_project_GYMAPP.Domain.Encryption;
 using Course_project_GYMAPP.Domain.Entity;
 using Course_project_GYMAPP.Domain.Enum;
 using Course_project_GYMAPP.Domain.Response;
@@ -133,7 +134,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 var user = new User()
                 {
                     Name = userVM.Name,
-                    Password = userVM.Password,
+                    Password = Encryption.EncrPassowrd(userVM.Password),
                     Age = userVM.Age,
                     Number = userVM.Number,
                     CardBefore = DateTime.MinValue,
@@ -216,6 +217,43 @@ namespace Course_project_GYMAPP.Service.Implementations
             catch (Exception ex)
             {
                 return new BaseResponse<User>()
+                {
+                    Description = $"[EditUser] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+        public async Task<BaseResponse<bool>> EditUser(AdminEditUserViewModel userVM)
+        {
+            var baseResponse = new BaseResponse<bool>();
+            try
+            {
+                var user = await _userRepository.Get(userVM.ID);
+
+                if (user == null)
+                {
+                    baseResponse.Description = "Користувача не знайдено";
+                    baseResponse.StatusCode = StatusCode.UserNotFound;
+                    return baseResponse;
+                }
+
+                user.Name = userVM.Name;
+                user.Age = userVM.Age;
+                user.Number = userVM.Number;
+                user.CardBefore = userVM.CardBefore;
+                if(userVM.Password != null)
+                {
+                    user.Password = Encryption.EncrPassowrd(userVM.Password);
+                }
+                
+                await _userRepository.Update(user);
+                baseResponse.Description = "Інформацію про користувача оновлено";
+                baseResponse.StatusCode = StatusCode.OK;
+                return baseResponse;
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>()
                 {
                     Description = $"[EditUser] : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError
