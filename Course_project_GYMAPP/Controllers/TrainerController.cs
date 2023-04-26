@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace Course_project_GYMAPP.Controllers
 {
-    public class TrainerController : Controller
+    public class TrainerController : BaseController
     {
         private readonly IGymUserService gymUserService;
         private readonly IUserService userService;

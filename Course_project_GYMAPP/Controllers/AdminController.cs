@@ -1,11 +1,12 @@
 ﻿using AspNetCore.Unobtrusive.Ajax;
+using Course_project_GYMAPP.Domain.Enum;
 using Course_project_GYMAPP.Domain.ViewModels;
 using Course_project_GYMAPP.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Course_project_GYMAPP.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         private readonly IUserService userService;
         private readonly IAdminService adminService;
@@ -19,7 +20,7 @@ namespace Course_project_GYMAPP.Controllers
             this.adminService = adminService;
             this.personalCardService = personalCardService;
         }
-
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View();
@@ -162,9 +163,25 @@ namespace Course_project_GYMAPP.Controllers
                 {
                     return NotFound();
                 }
-                return RedirectToAction("Index", "Admin");
+
+                ErrorMessage(resp.Description);
+                return View("Index");
             }
-            return RedirectToAction("Index", "Admin");
+            string error = string.Empty;
+            foreach(var err in ModelState)
+            {
+                if(err.Value.Errors.Count > 0)
+                {
+                    foreach(var er in err.Value.Errors)
+                    {
+                        error += er.ErrorMessage.ToString();
+                    }
+                }
+                
+            }
+            ErrorMessage(error);
+            return View("Index");
+            //return RedirectToAction("Index", "Admin");
         }
 
         [HttpPost]

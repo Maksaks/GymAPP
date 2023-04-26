@@ -6,10 +6,11 @@ using Course_project_GYMAPP.Service.Interfaces;
 using Course_project_GYMAPP.Domain.ViewModels;
 using Course_project_GYMAPP.Domain.Entity;
 using System.Data;
+using Course_project_GYMAPP.Domain.Enum;
 
 namespace Course_project_GYMAPP.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly IAccountService accountService;
         private readonly IUserService userService;
@@ -33,10 +34,10 @@ namespace Course_project_GYMAPP.Controllers
                 {
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(res.Data));
-
+                    Alert(res.Description, NotificationType.success);
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", res.Description);
+                Alert(res.Description, NotificationType.error);
             }
             return View(model);
         }
@@ -55,6 +56,7 @@ namespace Course_project_GYMAPP.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(res.Data));
 
+                    Alert(res.Description, NotificationType.success);
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", res.Description);
@@ -67,6 +69,7 @@ namespace Course_project_GYMAPP.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            Alert("Ви вийшли з облікового запису", NotificationType.success);
             return RedirectToAction("Index", "Home");
         }
 
@@ -105,9 +108,11 @@ namespace Course_project_GYMAPP.Controllers
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                             new ClaimsPrincipal(clid));
                     }
+
+                    Alert(res.Description, NotificationType.success);
                     return RedirectToAction("EditProfile", "Account");
                 }
-                ModelState.AddModelError("", res.Description);
+                Alert(res.Description, NotificationType.warning);
             }
             return View(model);
         }

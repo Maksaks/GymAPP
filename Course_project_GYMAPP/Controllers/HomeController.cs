@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace Course_project_GYMAPP.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public HomeController(IGymUserRepository gymUserRepository)
         {

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Course_project_GYMAPP.Controllers
 {
-    public class CardController : Controller
+    public class CardController : BaseController
     {
         private readonly IPersonalCardService personalCard;
         private readonly IUserService userService;

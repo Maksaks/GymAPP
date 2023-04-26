@@ -156,7 +156,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 return new BaseResponse<ClaimsIdentity>()
                 {
                     Data = Authenticate(newUser, "User"),
-                    Description = "Користувача додано",
+                    Description = "Користувача зареєстровано",
                     StatusCode = StatusCode.OK
                 };
             }
