@@ -274,6 +274,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                     var newuser = new User()
                     {
                         Name = cardViewModel.Name,
+                        Password = Encryption.EncrPassowrd(cardViewModel.Name),
                         Age = 0,
                         Number = "000-000-00-00",
                         CardBefore = DateTime.Today.AddDays(Convert.ToDouble(cardDur)),
@@ -281,7 +282,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                         DateReg = DateTime.Now
                     };
                     await _userRepository.Create(newuser);
-                    baseResponse.Description = "Користувача зареєстровано та оформлено абонемент";
+                    baseResponse.Description = "Користувача зареєстровано та оформлено абонемент. Тимчасовий пароль користувача - його логін";
                     baseResponse.StatusCode = StatusCode.UserNotFound;
                     return baseResponse;
                 }

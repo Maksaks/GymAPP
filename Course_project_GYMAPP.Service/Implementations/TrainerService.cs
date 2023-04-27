@@ -231,5 +231,47 @@ namespace Course_project_GYMAPP.Service.Implementations
                 };
             }
         }
+        public async Task<BaseResponse<List<TrainersInfoViewModel>>> GetTrainersInfo()
+        {
+            var baseResponse = new BaseResponse<List<TrainersInfoViewModel>>();
+            try
+            {
+                var trainers = await trainerRepository.Select();
+
+                if (trainers.Count == 0)
+                {
+                    baseResponse.Description = "Тренерів не знайдено";
+                    baseResponse.StatusCode = StatusCode.UserNotFound;
+                    return baseResponse;
+                }
+
+                var listTrainers = new List<TrainersInfoViewModel>();
+
+                foreach (var trainer in trainers)
+                {
+                    listTrainers.Add(new TrainersInfoViewModel()
+                    {
+                        Name= trainer.Name,
+                        Age= trainer.Age,
+                        Number= trainer.Number,
+                        AboutInfo = trainer.AboutInfo,
+                        ImgPath= trainer.ImgPath
+                    });
+                }
+
+                baseResponse.Data = listTrainers;
+                baseResponse.Description = "Інформацію про тренерів отримано";
+                baseResponse.StatusCode = StatusCode.OK;
+                return baseResponse;
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<TrainersInfoViewModel>>()
+                {
+                    Description = $"[GetTrainersInfo] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
     }
 }

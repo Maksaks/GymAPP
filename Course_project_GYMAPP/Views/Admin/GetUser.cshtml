@@ -30,40 +30,42 @@
 </form>
 
 <script>
-    const form = document.getElementById("editForm");
-    const pass = document.getElementById("password");
-    const confPass = document.getElementById("confirmPassword");
-    const errorMesPass = document.getElementById("lpass");
-    const errorMesConfPass = document.getElementById("lcpass");
+        const edform = document.getElementById("editForm");
+        const pass = document.getElementById("password");
+        const confPass = document.getElementById("confirmPassword");
+        const errorMesPass = document.getElementById("lpass");
+        const errorMesConfPass = document.getElementById("lcpass");
 
-    pass.oninput = function(event){
-        if(pass.value.length < 8){
-            errorMesPass.textContent = 'Пароль має містити понад 8 символів';
-            errorMesPass.className = 'error active';
+        pass.oninput = function (event) {
+            if (pass.value.length < 8) {
+                errorMesPass.textContent = 'Пароль має містити понад 8 символів';
+                errorMesPass.className = 'error active';
+                errorMesConfPass.textContent = '';
+                errorMesConfPass.className = 'error ';
+            }
+            else {
+                errorMesPass.textContent = '';
+                errorMesPass.className = 'error';
+                errorMesConfPass.textContent = '';
+                errorMesConfPass.className = 'error ';
+            }
+        }
+
+        confPass.oninput = function (event) {
             errorMesConfPass.textContent = '';
             errorMesConfPass.className = 'error ';
         }
-        else{
-            errorMesPass.textContent = '';
-            errorMesPass.className = 'error';
-            errorMesConfPass.textContent = '';
-            errorMesConfPass.className = 'error ';
-        }
-    }
-    
-    confPass.oninput = function(event){
-        errorMesConfPass.textContent = '';
-        errorMesConfPass.className = 'error ';
-    }
 
-    form.onsubmit = function (event) {
-        if (pass.value.length < 8) {
-            event.preventDefault();
+        edform.onsubmit = function (event) {
+            if (pass.value.length != 0) {
+                if (pass.value.length < 8) {
+                    event.preventDefault();
+                }
+                else if (pass.value != confPass.value) {
+                    errorMesConfPass.textContent = 'Паролі не співпадають';
+                    errorMesConfPass.className = 'error active';
+                    event.preventDefault();
+                }
+            }
         }
-        else if (pass.value != confPass.value){
-            errorMesConfPass.textContent = 'Паролі не співпадають';
-            errorMesConfPass.className = 'error active';
-            event.preventDefault();
-        }
-    };
 </script>

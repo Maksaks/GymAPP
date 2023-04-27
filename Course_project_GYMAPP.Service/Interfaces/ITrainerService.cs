@@ -18,5 +18,6 @@ namespace Course_project_GYMAPP.Service.Interfaces
         public Task<BaseResponse<bool>> DeleteTrainer(int id);
         public Task<BaseResponse<Trainer>> EditTrainer(int id, TrainerEditViewModel trainerVM);
         public Task<BaseResponse<bool>> EditTrainer(AdminEditTrainerViewModel userVM);
+        public Task<BaseResponse<List<TrainersInfoViewModel>>> GetTrainersInfo();
     }
 }

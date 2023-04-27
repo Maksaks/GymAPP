@@ -10,13 +10,14 @@ namespace Course_project_GYMAPP.Domain.ViewModels
 {
     public class UserEditDataViewModel
     {
-        [Display(Name = "Введіть ім'я")]
+        [Display(Name = "ім'я")]
         [Required(ErrorMessage = "Обов'язкове поле")]
         public string Name { get; set; }
-        [Display(Name = "Введіть телефон")]
+        [Display(Name = "телефон")]
         [Required(ErrorMessage = "Обов'язкове поле")]
         public string Number { get; set; }
-        [Display(Name = "Введіть вік")]
+        [Range(14,55)]
+        [Display(Name = "вік")]
         [Required(ErrorMessage = "Обов'язкове поле")]
         public int Age { get; set; }
     }

@@ -3,6 +3,86 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    
+
+<button onclick="goTop()" id="btn-top">&#9650;</button>
+
+<div id="carouselWithControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="img/gym1.jpg" class="d-block w-100" alt="Slide 1">
+        </div>
+        <div class="carousel-item">
+            <img src="img/gym2.jpg" class="d-block w-100" alt="Slide 2">
+        </div>
+        <div class="carousel-item">
+            <img src="img/gym3.jpg" class="d-block w-100" alt="Slide 3">
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselWithControls" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselWithControls" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </a>
 </div>
+<div>
+    <article class="main_page_text">
+        <p>
+            Завжди всім було відомо, що заняття спортом значною мірою можуть зберегти здоров'я,
+            нерідко виправити його, і, як наслідок, продовжити життя.
+            В умовах сучасного світу, коли більшу частину часу ми проводимо у сидячому положенні,
+            кожному необхідно приділяти час заняттям спорту, щоб елементарно підтримувати себе та свою опорно-рухову систему у тонусі.
+        </p>
+        <div class="row">
+            <img class="col-6 text-center mb-2 mt-2" src="https://fainaidea.com/wp-content/uploads/2019/03/DSC04939.jpg">
+            <img class="col-6 text-center mb-2 mt-2" src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Z3ltJTIwYmFja2dyb3VuZHxlbnwwfHwwfHw%3D&w=1000&q=80">
+        </div>
+
+        <p>
+            У залі працюють досвідчені інструктори-методисти,
+            які за бажанням клієнта допоможуть підібрати програму занять,
+            пояснять техніку виконання вправ, вкажуть на помилки.
+        </p>
+        <p id="header-list">
+            До послуг відвідувачів тренажерної зали:
+            <ul id="list-benefits">
+                <li>Загальна площа залів понад 300м2</li>
+                <li>Професійні тренажери та обладнання VASIL-GYM, VASIL-SWAY, INTER ATLETIK-GYM, X-LINE</li>
+                <li>Великий асортимент штанг та гантелей</li>
+                <li>Тренажери та обладнання розташовані по всій площі залів з урахуванням безпеки, функціональності та комфорту клієнтів та дають можливість займатися одночасно до 70 осіб</li>
+                <li>Професійне кардіообладнання, включаючи бігові доріжки, велотренажери, орбітреки, степери</li>
+                <li>Припливна та витяжна вентиляція</li>
+                <li>Спліт системи кондиціювання повітря</li>
+                <li>Очищена питна вода</li>
+                <li>Чоловічі та жіночі роздягальні обладнані шафами для перевдягання та душовими</li>
+            </ul>
+        </p>
+        <ul id="list-gym">
+            <li><img src="img/gym4.jpg"></li>
+            <li><img src="img/gym5.jpg"></li>
+            <li><img src="img/gym6.jpg"></li>
+            <br>
+            <li><img src="img/gym7.jpg"></li>
+            <li><img src="img/gym8.jpg"></li>
+            <li><img src="img/gym9.jpg"></li>
+        </ul>
+    </article>
+</div>
+
+<script>
+    window.onscroll = function () { scroll_check() };
+
+    function scroll_check() {
+        if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
+            document.getElementById("btn-top").style.display = "block";
+        } else {
+            document.getElementById("btn-top").style.display = "none";
+        }
+    }
+
+    function goTop() {
+        document.documentElement.scrollTop = 0;
+    }
+</script>

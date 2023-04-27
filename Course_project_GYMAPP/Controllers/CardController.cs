@@ -30,15 +30,15 @@ namespace Course_project_GYMAPP.Controllers
                     var user = (await userService.GetUserByName(User.Identity.Name)).Data;
                     var card = (await personalCard.GetPersonalCard(id)).Data;
                     var resp = await userService.EditUserCard(user, card);
-                    ModelState.AddModelError("", resp.Description);
+                    Alert(resp.Description, Domain.Enum.NotificationType.success);
                 }
                 else if (!User.IsInRole("User") && User.Identity.IsAuthenticated)
                 {
-                    ModelState.AddModelError("", "Вам не потрібен абонемент");
+                    Alert("Вам не потрібен абонемент", Domain.Enum.NotificationType.warning);
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Необхідно авторизуватися");
+                    Alert("Необхідно авторизуватися", Domain.Enum.NotificationType.warning);
                     return RedirectToAction("Register", "Account");
                 }
             }

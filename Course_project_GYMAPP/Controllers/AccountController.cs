@@ -59,7 +59,7 @@ namespace Course_project_GYMAPP.Controllers
                     Alert(res.Description, NotificationType.success);
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", res.Description);
+                Alert(res.Description, NotificationType.error);
             }
             return View(model);
         }

@@ -1,46 +1,66 @@
 ﻿@model Course_project_GYMAPP.Domain.ViewModels.UserRegisterViewModel
 
-@{
-    Layout = "_Layout";
-    ViewBag.Title = "Новий користувач";
-}
-
-<div style="padding: 20px;"></div>
-<div asp-validation-summary="All" class="alert alert-success m-5" role="alert"></div>
-<div class="container py-5">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <span class="anchor"></span>
-                    <div class="card card-account card-outline-secondary border border-white">
-                        <div class="card-header">
-                            <h3 class="mb-0 text-center paragraphHome text-black">Регистрация</h3>
-                        </div>
-                        <div class="card-body">
-                            <form asp-controller="Trainer" asp-action="Register">
-                                <div class="form-group">
-                                    <input asp-for="Name" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я" type="text">
-                                </div>
-                                <div class="form-group">
-                                    <input asp-for="Age" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Вік" type="number">
-                                </div>
-                                <div class="form-group">
-                                    <input asp-for="Number" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Номер телефону" type="number">
-                                </div>
-                                <div class="form-group">
-                                    <input autocomplete="new-password" asp-for="Password" placeholder="Пароль" class="mb-3 form-control textbox-dg font-weight-bold text-center" type="password">
-                                </div>
-                                <span class="text-black" style="font-size: small; font-family:'Comic Sans MS'">Пароль має бути понад 6 символів</span>
-                                <div class="form-group">
-                                    <input autocomplete="new-password" asp-for="ConfirmPassword" placeholder="Підтвердіть пароль" class="form-control mb-3 textbox-dg font-weight-bold text-center" type="password">
-                                </div>
-                                <button class="btn btn-success btn-lg float-md-none mb-3" type="submit">Створити нового користувача</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<form asp-controller="Trainer" asp-action="Register" method="post" id="registerForm">
+    <div class="form-group">
+        <input asp-for="Name" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я" type="text">
     </div>
-</div>
+    <div class="form-group">
+        <input asp-for="Age" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Вік" type="number">
+    </div>
+    <div class="form-group">
+        <input asp-for="Number" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Номер телефону" type="number">
+    </div>
+    <div class="form-group">
+        <input autocomplete="new-password" asp-for="Password" id="password" placeholder="Пароль" class="mb-3 form-control textbox-dg font-weight-bold text-center" type="password">
+    </div>
+    <span id="lpass" class="error" aria-live="polite"></span>
+    <div class="form-group">
+        <input autocomplete="new-password" asp-for="ConfirmPassword" id="confirmPassword" placeholder="Підтвердіть пароль" class="form-control mb-3 textbox-dg font-weight-bold text-center" type="password">
+    </div>
+    <span id="lcpass" class="error" aria-live="polite"></span>
+    <div class="modal-footer">
+        <button class="btn btn-success btn-lg float-md-none mb-3" type="submit">Створити нового користувача</button>
+    </div>
+</form>
+
+
+<script>
+    const form = document.getElementById("registerForm");
+    const pass = document.getElementById("password");
+    const confPass = document.getElementById("confirmPassword");
+    const errorMesPass = document.getElementById("lpass");
+    const errorMesConfPass = document.getElementById("lcpass");
+
+    pass.oninput = function (event) {
+        if (pass.value.length < 8) {
+            errorMesPass.textContent = 'Пароль має містити понад 8 символів';
+            errorMesPass.className = 'error active';
+            errorMesConfPass.textContent = '';
+            errorMesConfPass.className = 'error ';
+        }
+        else {
+            errorMesPass.textContent = '';
+            errorMesPass.className = 'error';
+            errorMesConfPass.textContent = '';
+            errorMesConfPass.className = 'error ';
+        }
+    }
+
+    confPass.oninput = function (event) {
+        errorMesConfPass.textContent = '';
+        errorMesConfPass.className = 'error ';
+    }
+
+    form.onsubmit = function (event) {
+        if (pass.value.length != 0) {
+            if (pass.value.length < 8) {
+                event.preventDefault();
+            }
+            else if (pass.value != confPass.value) {
+                errorMesConfPass.textContent = 'Паролі не співпадають';
+                errorMesConfPass.className = 'error active';
+                event.preventDefault();
+            }
+        }
+    };
+</script>

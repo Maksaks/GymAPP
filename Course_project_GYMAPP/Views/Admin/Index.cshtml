@@ -4,8 +4,7 @@
     Layout = "_Layout";
     ViewBag.Title = "Налаштування";
 }
-
-<div class="d-flex align-items-start mt-5 col-md-8">
+<div class="d-flex align-items-start mt-5 col-md-8 container">
     <div class="border nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <a style="font-size: 2em; color: black;" class="m-3 nav-link active bg-dark bg-opacity-25" id="v-pills-card-tab" data-bs-toggle="pill" href="#v-pills-card" role="tab" aria-controls="v-pills-card" aria-selected="true" onclick="showData('../Admin/GetPersonalCardsData', 'v-pills-card')">КАРТКИ</a>
         <a style="font-size: 2em; color: black;" class="m-3 nav-link bg-dark bg-opacity-25" id="v-pills-users-tab" data-bs-toggle="pill" href="#v-pills-users" role="tab" aria-controls="v-pills-users" aria-selected="false" onclick="showData('../Admin/GetUsersData', 'v-pills-users')">КОРИСТУВАЧІ</a>
@@ -41,7 +40,7 @@
         }
 
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: action,
             success: function (response){
                 $('#' + destination).html(response);

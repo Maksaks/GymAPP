@@ -15,6 +15,7 @@
             <div class="col-1 d-flex align-items-center justify-content-center" id="counterUsers">
             </div>
             <h1 class="header col-11">
+                <img  src="img/logo.png">
                 FERRUM GYM
             </h1>
         </div>
@@ -26,7 +27,7 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index">Головна сторінка</a>
             </li>
             <li>
-                <a asp-area="" asp-controller="Home" asp-action="Index">Інструктори</a>
+                <a asp-area="" asp-controller="Trainer" asp-action="GetTrainersInfo">Інструктори</a>
             </li>
                 @if(!User.Identity.IsAuthenticated || User.IsInRole("User"))
                 {
@@ -35,7 +36,7 @@
                     </li>
                 }
             <li>
-                <a asp-area="" asp-controller="Home" asp-action="Index">Контакти</a>
+                <a asp-area="" asp-controller="Contacts" asp-action="Index">Контакти</a>
             </li>
             
                 @if (User.Identity.IsAuthenticated)
@@ -73,7 +74,7 @@
             </ul>
     </nav>
     </header>
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
             @Html.Partial("_NotificationPanel")
             @RenderBody()
@@ -125,7 +126,8 @@
 
 
         function hideModal(){
-            $('#modal').modal('hide')
+            $('#modal').modal('hide');
+            $('#modal').find(".modal-body").html("");
         }
 
 

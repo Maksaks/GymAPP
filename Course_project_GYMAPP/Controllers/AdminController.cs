@@ -26,7 +26,7 @@ namespace Course_project_GYMAPP.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> GetUsersData()
         {
             var resp = await userService.GetUsers();
@@ -37,7 +37,7 @@ namespace Course_project_GYMAPP.Controllers
             var users = resp.Data;
             return PartialView("GetUsersData", users);
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> GetAdminsData()
         {
             var resp = await adminService.GetAdmins();
@@ -48,7 +48,7 @@ namespace Course_project_GYMAPP.Controllers
             var admins = resp.Data;
             return PartialView("GetAdminsData", admins);
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> GetTrainersData()
         {
             var resp = await trainerService.GetTrainers();
@@ -59,7 +59,7 @@ namespace Course_project_GYMAPP.Controllers
             var trainers = resp.Data;
             return PartialView("GetTrainersData", trainers);
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> GetPersonalCardsData()
         {
             var resp = await personalCardService.GetPersonalCards();
@@ -137,7 +137,7 @@ namespace Course_project_GYMAPP.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAdmin(int id)
-        {
+        {        
             var resp = await adminService.GetAdmin(id);
             if (resp.StatusCode != Domain.Enum.StatusCode.OK)
             {
@@ -164,18 +164,6 @@ namespace Course_project_GYMAPP.Controllers
                     return NotFound();
                 }
                 return RedirectToAction("Index", "Admin");
-            }
-            string error = string.Empty;
-            foreach(var err in ModelState)
-            {
-                if(err.Value.Errors.Count > 0)
-                {
-                    foreach(var er in err.Value.Errors)
-                    {
-                        error += er.ErrorMessage.ToString();
-                    }
-                }
-                
             }
             return RedirectToAction("Index", "Admin");
         }

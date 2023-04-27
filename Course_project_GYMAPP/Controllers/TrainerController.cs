@@ -53,23 +53,19 @@ namespace Course_project_GYMAPP.Controllers
             return RedirectToAction("Index", "Trainer");
         }
         [HttpGet]
-        public IActionResult Register() => View();
+        public IActionResult Register() => PartialView();
 
         [HttpPost]
         public async Task<IActionResult> Register(UserRegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            var res = await userService.CreateUser(model);
+            if (res.StatusCode == Domain.Enum.StatusCode.OK)
             {
-                var res = await userService.CreateUser(model);
-                if (res.StatusCode == Domain.Enum.StatusCode.OK)
-                {
-                    Alert(res.Description, Domain.Enum.NotificationType.success);
-                    return RedirectToAction("Index", "Trainer");
-                }
-                Alert(res.Description, Domain.Enum.NotificationType.error);
+                Alert(res.Description, Domain.Enum.NotificationType.success);
+                return RedirectToAction("Index", "Trainer");
             }
-            
-            return View(model);
+            Alert(res.Description, Domain.Enum.NotificationType.error);
+            return RedirectToAction("Index", "Trainer");
         }
         [HttpGet]
         public async Task<IActionResult> NewCard() => PartialView();
@@ -85,6 +81,17 @@ namespace Course_project_GYMAPP.Controllers
             }
             Alert(res.Description, Domain.Enum.NotificationType.warning);
             return RedirectToAction("Index", "Trainer");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTrainersInfo()
+        {
+            var res = await gymUserService.GetUsers();
+            if (res.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return View(res.Data);
+            }
+            return View();
         }
     }
 }
