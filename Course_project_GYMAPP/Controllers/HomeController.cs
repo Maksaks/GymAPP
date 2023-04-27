@@ -2,14 +2,23 @@
 using Course_project_GYMAPP.Models;
 using Course_project_GYMAPP.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 
 namespace Course_project_GYMAPP.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController(IGymUserRepository gymUserRepository)
+        private readonly IGymUserService gymUserService;
+        public HomeController(IGymUserService gymUserService)
         {
+            this.gymUserService = gymUserService;
+        }
+
+        public async Task<IActionResult> GetGymUserCount()
+        {
+            var countUsers = await gymUserService.GetCountOfUsersInGym();
+            return PartialView("GetGymUserCount", countUsers.Data);
         }
 
         public async Task<IActionResult> Index()

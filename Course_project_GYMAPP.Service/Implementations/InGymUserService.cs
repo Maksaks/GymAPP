@@ -43,6 +43,8 @@ namespace Course_project_GYMAPP.Service.Implementations
                                 timeInGym = DateTime.Now,
                                 Password = user.Password
                             };
+                            user.LastVisit = DateTime.Today;
+                            await userRepository.Update(user);
                             baseResponse.Data = await gymUserRepository.Create(gymUser);
                             baseResponse.Description = "Відвідувача додано";
                             baseResponse.StatusCode = StatusCode.OK;
@@ -136,6 +138,38 @@ namespace Course_project_GYMAPP.Service.Implementations
                 return new BaseResponse<List<InGymUser>>()
                 {
                     Description = $"[GetUsers] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+
+            }
+        }
+
+        public async Task<BaseResponse<int>> GetCountOfUsersInGym()
+        {
+            var baseResponse = new BaseResponse<int>();
+
+            try
+            {
+                var gymUsersCount = await gymUserRepository.GetCountOfUsersInGym();
+                if (gymUsersCount != 0)
+                {
+                    baseResponse.Data = gymUsersCount;
+                    baseResponse.StatusCode = StatusCode.OK;
+                    return baseResponse;
+                }
+                else
+                {
+                    baseResponse.Data = 0;
+                    baseResponse.StatusCode = StatusCode.GymUsersListEmpty;
+                    return baseResponse;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<int>()
+                {
+                    Description = $"[GetCountOfUsersInGym] : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError
                 };
 

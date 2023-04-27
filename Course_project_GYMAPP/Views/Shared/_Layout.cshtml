@@ -11,10 +11,14 @@
 </head>
 <body>
     <header>
-        <h1 class="header">
-        FERRUM GYM
-            <button id="home"></button>
-        </h1>
+        <div class="row">
+            <div class="col-1 d-flex align-items-center justify-content-center" id="counterUsers">
+            </div>
+            <h1 class="header col-11">
+                FERRUM GYM
+            </h1>
+        </div>
+        
     <nav id="mynav">
         
         <ul>
@@ -119,8 +123,23 @@
             });
         };
 
+
         function hideModal(){
             $('#modal').modal('hide')
+        }
+
+
+        window.onload = function() {
+            $.ajax({
+                    type: 'GET',
+                url: '../Home/GetGymUserCount',
+                    success: function (response) {
+                        $('#counterUsers').html(response);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
         }
     </script>
 

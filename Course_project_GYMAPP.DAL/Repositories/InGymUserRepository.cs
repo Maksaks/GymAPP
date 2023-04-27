@@ -53,5 +53,10 @@ namespace Course_project_GYMAPP.DAL.Repositories
             await appDb.SaveChangesAsync();
             return entity;
         }
+
+        public async Task<int> GetCountOfUsersInGym()
+        {
+            return (await appDb.InGymUser.ToListAsync()).Count;
+        }
     }
 }

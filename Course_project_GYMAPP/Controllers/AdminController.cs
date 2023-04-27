@@ -163,9 +163,7 @@ namespace Course_project_GYMAPP.Controllers
                 {
                     return NotFound();
                 }
-
-                ErrorMessage(resp.Description);
-                return View("Index");
+                return RedirectToAction("Index", "Admin");
             }
             string error = string.Empty;
             foreach(var err in ModelState)
@@ -179,9 +177,7 @@ namespace Course_project_GYMAPP.Controllers
                 }
                 
             }
-            ErrorMessage(error);
-            return View("Index");
-            //return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Index", "Admin");
         }
 
         [HttpPost]

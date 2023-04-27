@@ -17,10 +17,12 @@ namespace Course_project_GYMAPP.Service.Implementations
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IPersonalCardRepository personalCardRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IPersonalCardRepository personalCardRepository)
         {
             this._userRepository = userRepository;
+            this.personalCardRepository = personalCardRepository;
         }
 
         public async Task<BaseResponse<User>> GetUser(int id)
@@ -256,6 +258,55 @@ namespace Course_project_GYMAPP.Service.Implementations
                 return new BaseResponse<bool>()
                 {
                     Description = $"[EditUser] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+        public async Task<BaseResponse<bool>> NewCardForUser(NewCardViewModel cardViewModel)
+        {
+            var baseResponse = new BaseResponse<bool>();
+            try
+            {
+                var user = await _userRepository.GetByName(cardViewModel.Name);
+                var cardDur = (await personalCardRepository.Get(cardViewModel.Id)).Duration;
+                if (user == null)
+                {
+                    var newuser = new User()
+                    {
+                        Name = cardViewModel.Name,
+                        Age = 0,
+                        Number = "000-000-00-00",
+                        CardBefore = DateTime.Today.AddDays(Convert.ToDouble(cardDur)),
+                        LastVisit = DateTime.MinValue,
+                        DateReg = DateTime.Now
+                    };
+                    await _userRepository.Create(newuser);
+                    baseResponse.Description = "Користувача зареєстровано та оформлено абонемент";
+                    baseResponse.StatusCode = StatusCode.UserNotFound;
+                    return baseResponse;
+                }
+
+                if (user.CardBefore < DateTime.Today)
+                {
+                    user.CardBefore = DateTime.Today.AddDays(Convert.ToDouble(cardDur));
+                }
+                else
+                {
+                    user.CardBefore = user.CardBefore.AddDays(Convert.ToDouble(cardDur));
+                }
+
+
+                await _userRepository.Update(user);
+                baseResponse.Data = true;
+                baseResponse.Description = "Інформацію про термін дії клубної картки оновлено";
+                baseResponse.StatusCode = StatusCode.OK;
+                return baseResponse;
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>()
+                {
+                    Description = $"[NewCardForUser] : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError
                 };
             }

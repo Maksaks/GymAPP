@@ -7,13 +7,13 @@ namespace Course_project_GYMAPP.Controllers
     {
         public void Alert(string message, NotificationType notificationType)
         {
-            var msg = "<script>swal('" + notificationType.ToString().ToUpper() + "', '" + message + "','" + notificationType + "');</script>;";
+            var msg = "<script>swal('" + notificationType.ToString().ToUpper() + "', '" + message + "','" + notificationType + "');</script>";
             TempData["notification"] = msg;
         }
 
         public void ErrorMessage(string message)
         {
-            var msg = "<script>alert(" + message + ");</script>;";
+            var msg = "<script>alert(" + message + ");</script>";
             TempData["notification"] = msg;
         }
     }

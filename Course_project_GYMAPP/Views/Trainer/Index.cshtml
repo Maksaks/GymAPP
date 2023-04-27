@@ -4,14 +4,13 @@
     ViewData["Title"] = "Відвідувачі";
 }
 
-<div asp-validation-summary="All" class="alert alert-success mt-5 mb-5" role="alert"></div>
 
 <div class="row">
     <div class="col-sm-2">
         <a asp-action="Register" asp-controller="Trainer" type="button" class="btn btn-outline-secondary" id="input-group-button-right">Новий користувач</a>
     </div>
     <div class="col-sm-2">
-        <a asp-action="NewCard" asp-controller="Trainer" type="button" class="btn btn-outline-secondary" id="input-group-button-right">Оформити картку</a>
+        <button type="submit" class="btn btn-outline-secondary" onclick="showModal('../Trainer/NewCard', 0)" id="input-group-button-right">Оформити картку</button>
     </div>
     <div class="col-sm-7">
         <form asp-action="AddGymUser" asp-controller="Trainer" method="post">

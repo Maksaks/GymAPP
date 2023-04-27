@@ -12,7 +12,6 @@ namespace Course_project_GYMAPP.Controllers
     {
         private readonly IGymUserService gymUserService;
         private readonly IUserService userService;
-        private static string ErrorMessage;
         public TrainerController(IGymUserService gymUserService, IUserService userService)
         {
             this.gymUserService = gymUserService;
@@ -22,11 +21,6 @@ namespace Course_project_GYMAPP.Controllers
         public async Task<IActionResult> Index()
         {
             var res = await gymUserService.GetUsers();
-            if(ErrorMessage != null)
-            {
-                ModelState.AddModelError("", ErrorMessage);
-                ErrorMessage = string.Empty;
-            }
             if(res.StatusCode == Domain.Enum.StatusCode.OK)
             {
                 return View(res.Data);
@@ -37,16 +31,25 @@ namespace Course_project_GYMAPP.Controllers
         public async Task<IActionResult> AddGymUser(string name)
         {
             var res = await gymUserService.AddUser(name);
-            
-            ErrorMessage = res.Description;
+
+            if (res.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                Alert(res.Description, Domain.Enum.NotificationType.success);
+                return RedirectToAction("Index", "Trainer");
+            }
+            Alert(res.Description, Domain.Enum.NotificationType.error);
             return RedirectToAction("Index", "Trainer");
         }
         [HttpPost]
         public async Task<IActionResult> DeleteGymUser(int id)
         {
             var res = await gymUserService.DeleteUser(id);
-            
-            ErrorMessage = res.Description;
+            if (res.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                Alert(res.Description, Domain.Enum.NotificationType.success);
+                return RedirectToAction("Index", "Trainer");
+            }
+            Alert(res.Description, Domain.Enum.NotificationType.error);
             return RedirectToAction("Index", "Trainer");
         }
         [HttpGet]
@@ -60,11 +63,28 @@ namespace Course_project_GYMAPP.Controllers
                 var res = await userService.CreateUser(model);
                 if (res.StatusCode == Domain.Enum.StatusCode.OK)
                 {
-                    ErrorMessage = res.Description;
+                    Alert(res.Description, Domain.Enum.NotificationType.success);
                     return RedirectToAction("Index", "Trainer");
                 }
+                Alert(res.Description, Domain.Enum.NotificationType.error);
             }
+            
             return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> NewCard() => PartialView();
+
+        [HttpPost]
+        public async Task<IActionResult> NewCard(NewCardViewModel cardViewModel)
+        {
+            var res = await userService.NewCardForUser(cardViewModel);
+            if (res.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                Alert(res.Description, Domain.Enum.NotificationType.success);
+                return RedirectToAction("Index", "Trainer");
+            }
+            Alert(res.Description, Domain.Enum.NotificationType.warning);
+            return RedirectToAction("Index", "Trainer");
         }
     }
 }

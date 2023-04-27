@@ -1,7 +1,7 @@
 ﻿@model Course_project_GYMAPP.Domain.ViewModels.AdminEditTrainerViewModel
 
 
-<form method="post" asp-controller="Admin" asp-action="EditUser">
+<form method="post" asp-controller="Admin" asp-action="EditTrainer" id="editForm">
     <input asp-for="ID" hidden/>
     <div asp-validation-summary="All" style="font-size:23px; font-family:Impact" class="text-danger text-center"></div>
     <div class="form-group">
@@ -20,13 +20,53 @@
         <input asp-for="ImgPath" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Шлях до файлу з зображенням" type="text">
     </div>
     <div class="form-group">
-        <input autocomplete="new-password" asp-for="Password" placeholder="Пароль" class="mb-3 form-control textbox-dg font-weight-bold text-center" type="password">
+        <input autocomplete="new-password" id="password" asp-for="Password" placeholder="Пароль" class="mb-3 form-control textbox-dg font-weight-bold text-center" type="password">
     </div>
-    <span class="text-black" style="font-size: small; font-family:'Comic Sans MS'">Пароль має бути понад 8 символів</span>
+    <span id="lpass" class="error" aria-live="polite"></span>
     <div class="form-group">
-        <input autocomplete="new-password" asp-for="ConfirmPassword" placeholder="Підтвердіть пароль" class="form-control mb-3 textbox-dg font-weight-bold text-center" type="password">
+        <input autocomplete="new-password" id="confirmPassword" asp-for="ConfirmPassword" placeholder="Підтвердіть пароль" class="form-control mb-3 textbox-dg font-weight-bold text-center" type="password">
     </div>
+    <span id="lcpass" class="error" aria-live="polite"></span>
     <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Зберегти зміни</button>
     </div>
 </form>
+
+<script>
+    const form = document.getElementById("editForm");
+    const pass = document.getElementById("password");
+    const confPass = document.getElementById("confirmPassword");
+    const errorMesPass = document.getElementById("lpass");
+    const errorMesConfPass = document.getElementById("lcpass");
+
+    pass.oninput = function (event) {
+        if (pass.value.length < 8) {
+            errorMesPass.textContent = 'Пароль має містити понад 8 символів';
+            errorMesPass.className = 'error active';
+            errorMesConfPass.textContent = '';
+            errorMesConfPass.className = 'error ';
+        }
+        else {
+            errorMesPass.textContent = '';
+            errorMesPass.className = 'error';
+            errorMesConfPass.textContent = '';
+            errorMesConfPass.className = 'error ';
+        }
+    }
+
+    confPass.oninput = function (event) {
+        errorMesConfPass.textContent = '';
+        errorMesConfPass.className = 'error ';
+    }
+
+    form.onsubmit = function (event) {
+        if (pass.value.length < 8) {
+            event.preventDefault();
+        }
+        else if (pass.value != confPass.value) {
+            errorMesConfPass.textContent = 'Паролі не співпадають';
+            errorMesConfPass.className = 'error active';
+            event.preventDefault();
+        }
+    };
+</script>
