@@ -155,7 +155,7 @@ footer {
     line-height: 2em;
 }
 
-p:first-letter {
+.main_page_text p:first-letter {
     font-weight: bold;
     color: black;
     font-size: 2.01em;
@@ -214,3 +214,8 @@ p:first-letter {
         border-radius: 50px;
         font-size: 40px;
     }
+
+.tableBodyScroll {
+    max-height: 620px;
+    overflow: auto;
+}

@@ -5,19 +5,19 @@
     <input asp-for="ID" hidden/>
     <div asp-validation-summary="All" style="font-size:23px; font-family:Impact" class="text-danger text-center"></div>
     <div class="form-group">
-        <input asp-for="Name" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я" type="text">
+        <input asp-for="Name" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я" type="text" required>
     </div>
     <div class="form-group">
-        <input asp-for="Age" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Вік" type="number">
+        <input asp-for="Age" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Вік" type="number" required>
     </div>
     <div class="form-group">
-        <input asp-for="Number" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Номер телефону" type="number">
+        <input asp-for="Number" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Номер телефону" type="number" required>
     </div>
     <div class="form-group">
-        <input asp-for="AboutInfo" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Особисті дані" type="text">
+        <textarea asp-for="AboutInfo" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Особисті дані" type="text" required></textarea>
     </div>
     <div class="form-group">
-        <input asp-for="ImgPath" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Шлях до файлу з зображенням" type="text">
+        <input asp-for="ImgPath" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Шлях до файлу з зображенням" type="text" required>
     </div>
     <div class="form-group">
         <input autocomplete="new-password" id="password" asp-for="Password" placeholder="Пароль" class="mb-3 form-control textbox-dg font-weight-bold text-center" type="password">
@@ -33,40 +33,36 @@
 </form>
 
 <script>
-    const form = document.getElementById("editForm");
-    const pass = document.getElementById("password");
-    const confPass = document.getElementById("confirmPassword");
-    const errorMesPass = document.getElementById("lpass");
-    const errorMesConfPass = document.getElementById("lcpass");
-
-    pass.oninput = function (event) {
-        if (pass.value.length < 8) {
-            errorMesPass.textContent = 'Пароль має містити понад 8 символів';
-            errorMesPass.className = 'error active';
-            errorMesConfPass.textContent = '';
-            errorMesConfPass.className = 'error ';
+    document.getElementById("password").oninput = function (event) {
+        if (document.getElementById("password").value.length < 8) {
+            document.getElementById("lpass").textContent = 'Пароль має містити понад 8 символів';
+            document.getElementById("lpass").className = 'error active';
+            document.getElementById("lcpass").textContent = '';
+            document.getElementById("lcpass").className = 'error ';
         }
         else {
-            errorMesPass.textContent = '';
-            errorMesPass.className = 'error';
-            errorMesConfPass.textContent = '';
-            errorMesConfPass.className = 'error ';
+            document.getElementById("lpass").textContent = '';
+            document.getElementById("lpass").className = 'error';
+            document.getElementById("lcpass").textContent = '';
+            document.getElementById("lcpass").className = 'error ';
         }
     }
 
-    confPass.oninput = function (event) {
-        errorMesConfPass.textContent = '';
-        errorMesConfPass.className = 'error ';
+    document.getElementById("confirmPassword").oninput = function (event) {
+        document.getElementById("lcpass").textContent = '';
+        document.getElementById("lcpass").className = 'error ';
     }
 
-    form.onsubmit = function (event) {
-        if (pass.value.length < 8) {
-            event.preventDefault();
+    document.getElementById("editForm").onsubmit = function (event) {
+        if (document.getElementById("password").value.length != 0) {
+            if (document.getElementById("password").value.length < 8) {
+                event.preventDefault();
+            }
+            else if (document.getElementById("password").value != document.getElementById("confirmPassword").value) {
+                document.getElementById("lcpass").textContent = 'Паролі не співпадають';
+                document.getElementById("lcpass").className = 'error active';
+                event.preventDefault();
+            }
         }
-        else if (pass.value != confPass.value) {
-            errorMesConfPass.textContent = 'Паролі не співпадають';
-            errorMesConfPass.className = 'error active';
-            event.preventDefault();
-        }
-    };
+    }
 </script>

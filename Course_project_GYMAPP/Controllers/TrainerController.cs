@@ -12,10 +12,12 @@ namespace Course_project_GYMAPP.Controllers
     {
         private readonly IGymUserService gymUserService;
         private readonly IUserService userService;
-        public TrainerController(IGymUserService gymUserService, IUserService userService)
+        private readonly ITrainerService trainerService;
+        public TrainerController(IGymUserService gymUserService, IUserService userService, ITrainerService trainerService)
         {
             this.gymUserService = gymUserService;
             this.userService = userService;
+            this.trainerService = trainerService;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -86,7 +88,7 @@ namespace Course_project_GYMAPP.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTrainersInfo()
         {
-            var res = await gymUserService.GetUsers();
+            var res = await trainerService.GetTrainersInfo();
             if (res.StatusCode == Domain.Enum.StatusCode.OK)
             {
                 return View(res.Data);

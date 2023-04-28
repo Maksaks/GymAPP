@@ -30,7 +30,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 var admin = new Admin()
                 {
                     Name = adminVM.Name,
-                    Password = adminVM.Password
+                    Password = Encryption.EncrPassowrd(adminVM.Password)
                 };
                 baseResponse.Data = await adminRepository.Create(admin);
                 baseResponse.Description = "Адміна зареєстровано";

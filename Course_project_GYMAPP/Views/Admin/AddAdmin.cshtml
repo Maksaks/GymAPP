@@ -1,0 +1,57 @@
+﻿@model Course_project_GYMAPP.Domain.ViewModels.AdminRegisterViewModel
+
+<form asp-controller="Account" asp-action="Register" id="createForm">
+    <div class="form-group">
+        <input asp-for="Name" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я" type="text" required>
+    </div>
+    <div class="form-group">
+        <input autocomplete="new-password" asp-for="Password" id="password" placeholder="Пароль" class="mb-3 form-control textbox-dg font-weight-bold text-center" type="password">
+    </div>
+    <span id="lpass" class="error" aria-live="polite"></span>
+    <div class="form-group">
+        <input autocomplete="new-password" asp-for="ConfirmPassword" id="confirmPassword" placeholder="Підтвердіть пароль" class="form-control mb-3 textbox-dg font-weight-bold text-center" type="password">
+    </div>
+    <span id="lcpass" class="error" aria-live="polite"></span>
+    <button class="btn btn-success btn-lg float-md-none mb-3" type="submit">Зареєструватися</button>
+</form>
+
+<script>
+    const edform = document.getElementById("createForm");
+    const pass = document.getElementById("password");
+    const confPass = document.getElementById("confirmPassword");
+    const errorMesPass = document.getElementById("lpass");
+    const errorMesConfPass = document.getElementById("lcpass");
+
+    pass.oninput = function (event) {
+        if (pass.value.length < 8) {
+            errorMesPass.textContent = 'Пароль має містити понад 8 символів';
+            errorMesPass.className = 'error active';
+            errorMesConfPass.textContent = '';
+            errorMesConfPass.className = 'error ';
+        }
+        else {
+            errorMesPass.textContent = '';
+            errorMesPass.className = 'error';
+            errorMesConfPass.textContent = '';
+            errorMesConfPass.className = 'error ';
+        }
+    }
+
+    confPass.oninput = function (event) {
+        errorMesConfPass.textContent = '';
+        errorMesConfPass.className = 'error ';
+    }
+
+    edform.onsubmit = function (event) {
+        if (pass.value.length != 0) {
+            if (pass.value.length < 8) {
+                event.preventDefault();
+            }
+            else if (pass.value != confPass.value) {
+                errorMesConfPass.textContent = 'Паролі не співпадають';
+                errorMesConfPass.className = 'error active';
+                event.preventDefault();
+            }
+        }
+    }
+</script>

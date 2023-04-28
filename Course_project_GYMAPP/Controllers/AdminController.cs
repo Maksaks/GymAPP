@@ -201,14 +201,10 @@ namespace Course_project_GYMAPP.Controllers
         [HttpPost]
         public async Task<IActionResult> EditTrainer(AdminEditTrainerViewModel trainerVM)
         {
-            if (ModelState.IsValid)
+            var resp = await trainerService.EditTrainer(trainerVM);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
             {
-                var resp = await trainerService.EditTrainer(trainerVM);
-                if (resp.StatusCode != Domain.Enum.StatusCode.OK)
-                {
-                    return NotFound();
-                }
-                return RedirectToAction("Index", "Admin");
+                return NotFound();
             }
             return RedirectToAction("Index", "Admin");
         }
@@ -254,6 +250,41 @@ namespace Course_project_GYMAPP.Controllers
             {
                 return NotFound();
             }
+            return RedirectToAction("Index", "Admin");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddUser() => PartialView();
+        [HttpGet]
+        public async Task<IActionResult> AddTrainer() => PartialView();
+        [HttpGet]
+        public async Task<IActionResult> AddAdmin() => PartialView();
+        [HttpGet]
+        public async Task<IActionResult> AddPersonalCard() => PartialView();
+
+        [HttpPost]
+        public async Task<IActionResult> AddUser(UserRegisterViewModel userVM)
+        {
+            return RedirectToAction("Index", "Admin");
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddTrainer(TrainerRegisterViewModel trainerVM)
+        {
+            var resp = await trainerService.CreateTrainer(trainerVM);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Index", "Admin");
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddAdmin(AdminRegisterViewModel adminVM)
+        {
+            return RedirectToAction("Index", "Admin");
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddPersonalCard(PersonalCardViewModel personalCardVM)
+        {
             return RedirectToAction("Index", "Admin");
         }
     }

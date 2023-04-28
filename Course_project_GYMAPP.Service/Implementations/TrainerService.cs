@@ -30,7 +30,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 var trainer = new Trainer()
                 {
                     Name = trainerVM.Name,
-                    Password = trainerVM.Password,
+                    Password = Encryption.EncrPassowrd(trainerVM.Password),
                     Age = trainerVM.Age,
                     Number = trainerVM.Number,
                     ImgPath = trainerVM.ImgPath,

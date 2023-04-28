@@ -1,2 +1,40 @@
 ﻿@model List<Course_project_GYMAPP.Domain.ViewModels.TrainersInfoViewModel>
 
+@{
+    ViewData["Title"] = "Інструктори";
+}
+
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-1 g-3">
+
+        @foreach(var item in Model)
+        {
+            <div class="col">
+                <div class="card m-3" style="background-color:lightgray">
+                    <div class="row g-0">
+                        <div class="col-5 col-sm-4">
+                            <img src="@item.ImgPath" class="img-fluid w-100 p-2" alt="card-horizontal-image">
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size:30px;">@item.Name</h5>
+                                <p class="card-text" style="font-size:20px;">
+                                    <div class="p-1" style="font-size:20px;">
+                                        <b>Вік:</b> @item.Age<br />
+                                    </div>
+                                    <div class="p-1" style="font-size:20px;">
+                                        <b>Номер телефону: </b>@item.Number<br />
+                                    </div>
+                                    <div class="p-1" style="text-indent:5%;font-size:20px;">
+                                        @item.AboutInfo
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
