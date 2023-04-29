@@ -58,5 +58,11 @@ namespace Course_project_GYMAPP.DAL.Repositories
         {
             return (await appDb.InGymUser.ToListAsync()).Count;
         }
+
+        public async Task<List<InGymUser>> Search(string pattern)
+        {
+            pattern = "%" + pattern + "%";
+            return await appDb.InGymUser.Where(p => EF.Functions.Like(p.Name, pattern)).ToListAsync();
+        }
     }
 }

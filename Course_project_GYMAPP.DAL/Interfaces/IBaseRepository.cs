@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Course_project_GYMAPP.Domain.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,6 @@ namespace Course_project_GYMAPP.DAL.Interfaces
         Task<bool> Delete(T entity);
 
         Task<T> Update(T entity);
+        Task<List<T>> Search(string pattern);
     }
 }

@@ -100,6 +100,21 @@
 
     <script>
 
+        function Search(action, pattern, dist){
+            $.ajax({
+                type: 'GET',
+                url: action,
+                data: { "pattern": pattern },
+                success: function (response) {
+                    console.log("get rez");
+                    $(dist).html(response);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+
         function showModal(action, id) {
 
             if (action === undefined || id == undefined) {

@@ -17,5 +17,6 @@ namespace Course_project_GYMAPP.Service.Interfaces
         public Task<BaseResponse<Admin>> GetAdminByName(string name);
         public Task<BaseResponse<bool>> DeleteAdmin(int id);
         public Task<BaseResponse<bool>> EditAdmin(AdminEditAdminViewModel userVM);
+        public Task<BaseResponse<List<Admin>>> Search(string pattern);
     }
 }

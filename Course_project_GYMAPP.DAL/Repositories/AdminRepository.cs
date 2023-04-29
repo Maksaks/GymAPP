@@ -53,5 +53,11 @@ namespace Course_project_GYMAPP.DAL.Repositories
             await appDb.SaveChangesAsync();
             return entity;
         }
+
+        public async Task<List<Admin>> Search(string pattern)
+        {
+            pattern = "%" + pattern + "%";
+            return await appDb.Admin.Where(p => EF.Functions.Like(p.Name, pattern)).ToListAsync();
+        }
     }
 }

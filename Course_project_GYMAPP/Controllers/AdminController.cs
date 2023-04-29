@@ -308,5 +308,49 @@ namespace Course_project_GYMAPP.Controllers
             TempData["id"] = "v-pills-card-tab";
             return RedirectToAction("Index", "Admin");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> SearchUser(string pattern)
+        {
+            var resp = await userService.Search(pattern);
+            if (resp.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return PartialView("SearchResultUser", resp.Data);
+            }
+            return PartialView("SearchResultUser", new List<User>());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SearchPersonalCard(string pattern)
+        {
+            var resp = await personalCardService.Search(pattern);
+            if (resp.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return PartialView("SearchResultPersonalCard", resp.Data);
+            }
+            return PartialView("SearchResultPersonalCard", new List<PersonalCard>());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SearchTrainer(string pattern)
+        {
+            var resp = await trainerService.Search(pattern);
+            if (resp.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return PartialView("SearchResultTrainer", resp.Data);
+            }
+            return PartialView("SearchResultTrainer", new List<Trainer>());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SearchAdmin(string pattern)
+        {
+            var resp = await adminService.Search(pattern);
+            if (resp.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return PartialView("SearchResultAdmin", resp.Data);
+            }
+            return PartialView("SearchResultAdmin", new List<Admin>());
+        }
     }
 }

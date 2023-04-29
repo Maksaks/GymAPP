@@ -5,15 +5,12 @@
         <button onclick="showModal('../Admin/AddTrainer', 0)" type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Новий трейнер</button>
     </div>
     <div class="col-sm-7">
-        <form asp-action="AddGymUser" asp-controller="Trainer" method="post">
-            <div class="input-group">
-                <input name="name" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="input-group-button-right">
-                <button type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Пошук</button>
-            </div>
-        </form>
+        <div class="input-group">
+            <input name="name" id="searchLineTrainer" type="text" class="form-control" placeholder="Пошук тренера за ім'ям" aria-label="Username" aria-describedby="input-group-button-right">
+        </div>
     </div>
 </div>
-<div class="tableBodyScroll">
+<div class="tableBodyScroll" id="trainerTable">
 <table class="table table-hover">
 <thead>
     <tr>
@@ -49,3 +46,9 @@
 </tbody>
 </table>
 </div>
+
+<script>
+    document.getElementById("searchLineTrainer").oninput = function () {
+        Search('../Admin/SearchTrainer', this.value, '#trainerTable');
+    }
+</script>

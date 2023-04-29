@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Course_project_GYMAPP.Domain.Entity.PersonalCard>
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Ім'я</th>
+            <th scope="col">Вартість</th>
+            <th scope="col">Термін дії</th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model.Count() > 0)
+        {
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <th scope="row">@user.ID</th>
+                    <td>@user.Name</td>
+                    <td>@user.Price</td>
+                    <td>@user.Duration</td>
+                    <td><button type="submit" class="btn btn-outline-secondary" id="input-group-button-right" onclick="showModal('../Admin/GetPersonalCard', @user.ID)">Редагувати</button></td>
+                    <td>
+                        <form method="post" asp-controller="Admin" asp-action="DeletePersonalCard" asp-route-id="@user.ID">
+                            <button type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Видалити</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                    <th scope="row"> </th>
+                    <td>Не знайдено</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+        }
+    </tbody>
+</table>

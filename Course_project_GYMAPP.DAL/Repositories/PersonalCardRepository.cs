@@ -48,5 +48,11 @@ namespace Course_project_GYMAPP.DAL.Repositories
             await appDb.SaveChangesAsync();
             return entity;
         }
+
+        public async Task<List<PersonalCard>> Search(string pattern)
+        {
+            pattern = "%" + pattern + "%";
+            return await appDb.PersonalCards.Where(p => EF.Functions.Like(p.Name, pattern)).ToListAsync();
+        }
     }
 }

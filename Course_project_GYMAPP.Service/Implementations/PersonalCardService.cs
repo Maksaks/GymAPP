@@ -194,5 +194,25 @@ namespace Course_project_GYMAPP.Service.Implementations
                 };
             }
         }
+
+        public async Task<BaseResponse<List<PersonalCard>>> Search(string pattern)
+        {
+            var baseResponse = new BaseResponse<List<PersonalCard>>();
+            try
+            {
+                baseResponse.Data = await personalCardRepository.Search(pattern);
+                baseResponse.Description = "Результати пошуку отримано";
+                baseResponse.StatusCode = StatusCode.OK;
+                return baseResponse;
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<PersonalCard>>()
+                {
+                    Description = $"[Search] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
     }
 }

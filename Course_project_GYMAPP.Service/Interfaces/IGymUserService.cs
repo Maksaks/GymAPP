@@ -15,5 +15,6 @@ namespace Course_project_GYMAPP.Service.Interfaces
         public Task<BaseResponse<List<InGymUser>>> GetUsers();
         public Task<BaseResponse<bool>> DeleteUser(int id);
         public Task<BaseResponse<int>> GetCountOfUsersInGym();
+        public Task<BaseResponse<List<InGymUser>>> Search(string pattern);
     }
 }

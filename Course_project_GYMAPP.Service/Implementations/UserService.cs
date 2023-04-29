@@ -312,5 +312,25 @@ namespace Course_project_GYMAPP.Service.Implementations
                 };
             }
         }
+
+        public async Task<BaseResponse<List<User>>> Search(string pattern)
+        {
+            var baseResponse = new BaseResponse<List<User>>();
+            try
+            {
+                baseResponse.Data = await _userRepository.Search(pattern);
+                baseResponse.Description = "Результати пошуку отримано";
+                baseResponse.StatusCode = StatusCode.OK;
+                return baseResponse;
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<User>> ()
+                {
+                    Description = $"[Search] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
     }
 }
