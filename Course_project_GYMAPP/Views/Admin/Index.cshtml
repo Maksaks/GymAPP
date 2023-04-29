@@ -30,6 +30,11 @@
 
 
 <script type="text/javascript">
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('@TempData["id"]').click();
+    });
+
     function showData(act, dest){
         const action = act;
         const destination = dest;

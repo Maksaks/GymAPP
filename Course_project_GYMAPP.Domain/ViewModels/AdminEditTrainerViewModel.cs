@@ -27,13 +27,9 @@ namespace Course_project_GYMAPP.Domain.ViewModels
         [Required(ErrorMessage = "Обов'язкове поле")]
         public string AboutInfo { get; set; }
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Вкажіть пароль")]
-        [MinLength(8, ErrorMessage = "Пароль повинен мати довжину понад 8 символів")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Підтвердіть пароль")]
-        [Compare("Password", ErrorMessage = "Пароли не співпадають")]
         public string ConfirmPassword { get; set; }
     }
 }

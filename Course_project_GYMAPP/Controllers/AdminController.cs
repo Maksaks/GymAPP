@@ -1,4 +1,5 @@
 ﻿using AspNetCore.Unobtrusive.Ajax;
+using Course_project_GYMAPP.Domain.Entity;
 using Course_project_GYMAPP.Domain.Enum;
 using Course_project_GYMAPP.Domain.ViewModels;
 using Course_project_GYMAPP.Service.Interfaces;
@@ -23,6 +24,10 @@ namespace Course_project_GYMAPP.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            if (TempData["id"] == "" || TempData["id"] == null)
+            {
+                TempData["id"] = "v-pills-card-tab";
+            }
             return View();
         }
 
@@ -156,46 +161,38 @@ namespace Course_project_GYMAPP.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUser(AdminEditUserViewModel userVM)
         {
-            if(ModelState.IsValid)
+            var resp = await userService.EditUser(userVM);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
             {
-                var resp = await userService.EditUser(userVM);
-                if (resp.StatusCode != Domain.Enum.StatusCode.OK)
-                {
-                    return NotFound();
-                }
-                return RedirectToAction("Index", "Admin");
+                return NotFound();
             }
+            TempData["id"] = "v-pills-users-tab";
             return RedirectToAction("Index", "Admin");
         }
 
         [HttpPost]
         public async Task<IActionResult> EditPersonalCard(AdminEditPersonalCardViewModel cardVM)
         {
-            if (ModelState.IsValid)
+            var resp = await personalCardService.EditPersonalCard(cardVM);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
             {
-                var resp = await personalCardService.EditPersonalCard(cardVM);
-                if (resp.StatusCode != Domain.Enum.StatusCode.OK)
-                {
-                    return NotFound();
-                }
-                return RedirectToAction("Index", "Admin");
+                return NotFound();
             }
+            TempData["id"] = "v-pills-card-tab";
             return RedirectToAction("Index", "Admin");
         }
 
         [HttpPost]
         public async Task<IActionResult> EditAdmin(AdminEditAdminViewModel adminVM)
         {
-            if (ModelState.IsValid)
+            var resp = await adminService.EditAdmin(adminVM);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
             {
-                var resp = await adminService.EditAdmin(adminVM);
-                if (resp.StatusCode != Domain.Enum.StatusCode.OK)
-                {
-                    return NotFound();
-                }
-                return RedirectToAction("Index", "Admin");
+                return NotFound();
             }
+            TempData["id"] = "v-pills-admins-tab";
             return RedirectToAction("Index", "Admin");
+            
         }
 
         [HttpPost]
@@ -206,6 +203,7 @@ namespace Course_project_GYMAPP.Controllers
             {
                 return NotFound();
             }
+            TempData["id"] = "v-pills-trainers-tab";
             return RedirectToAction("Index", "Admin");
         }
 
@@ -217,6 +215,7 @@ namespace Course_project_GYMAPP.Controllers
             {
                 return NotFound();
             }
+            TempData["id"] = "v-pills-users-tab";
             return RedirectToAction("Index", "Admin");
         }
 
@@ -228,6 +227,7 @@ namespace Course_project_GYMAPP.Controllers
             {
                 return NotFound();
             }
+            TempData["id"] = "v-pills-admins-tab";
             return RedirectToAction("Index", "Admin");
         }
 
@@ -239,6 +239,7 @@ namespace Course_project_GYMAPP.Controllers
             {
                 return NotFound();
             }
+            TempData["id"] = "v-pills-trainers-tab";
             return RedirectToAction("Index", "Admin");
         }
 
@@ -250,6 +251,7 @@ namespace Course_project_GYMAPP.Controllers
             {
                 return NotFound();
             }
+            TempData["id"] = "v-pills-card-tab";
             return RedirectToAction("Index", "Admin");
         }
 
@@ -265,6 +267,12 @@ namespace Course_project_GYMAPP.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUser(UserRegisterViewModel userVM)
         {
+            var resp = await userService.CreateUser(userVM);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            TempData["id"] = "v-pills-users-tab";
             return RedirectToAction("Index", "Admin");
         }
         [HttpPost]
@@ -275,16 +283,29 @@ namespace Course_project_GYMAPP.Controllers
             {
                 return NotFound();
             }
+            TempData["id"] = "v-pills-trainers-tab";
             return RedirectToAction("Index", "Admin");
         }
         [HttpPost]
         public async Task<IActionResult> AddAdmin(AdminRegisterViewModel adminVM)
         {
+            var resp = await adminService.CreateAdmin(adminVM);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            TempData["id"] = "v-pills-admins-tab";
             return RedirectToAction("Index", "Admin");
         }
         [HttpPost]
         public async Task<IActionResult> AddPersonalCard(PersonalCardViewModel personalCardVM)
         {
+            var resp = await personalCardService.CreatePersonalCard(personalCardVM);
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            TempData["id"] = "v-pills-card-tab";
             return RedirectToAction("Index", "Admin");
         }
     }

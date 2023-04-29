@@ -1,5 +1,19 @@
 ﻿@model IEnumerable<Course_project_GYMAPP.Domain.Entity.PersonalCard>
 
+
+<div class="row p-2">
+    <div class="col-sm-2">
+        <button onclick="showModal('../Admin/AddPersonalCard', 0)" type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Нова картка</button>
+    </div>
+    <div class="col-sm-7">
+        <form asp-action="AddGymUser" asp-controller="Trainer" method="post">
+            <div class="input-group">
+                <input name="name" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="input-group-button-right">
+                <button type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Пошук</button>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="tableBodyScroll">
 <table class="table table-hover">
 <thead>

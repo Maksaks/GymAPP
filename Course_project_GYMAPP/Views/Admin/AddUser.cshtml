@@ -1,6 +1,6 @@
 ﻿@model Course_project_GYMAPP.Domain.ViewModels.UserRegisterViewModel
 
-<form asp-controller="Account" asp-action="Register" id="createForm">
+<form asp-controller="Admin" asp-action="AddUser" id="createForm">
     <div class="form-group">
         <input asp-for="Name" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я" type="text" required>
     </div>
@@ -11,11 +11,11 @@
         <input asp-for="Number" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Номер телефону" type="number" required>
     </div>
     <div class="form-group">
-        <input autocomplete="new-password" asp-for="Password" id="password" placeholder="Пароль" class="mb-3 form-control textbox-dg font-weight-bold text-center" type="password">
+        <input autocomplete="new-password" asp-for="Password" id="password" placeholder="Пароль" class="mb-3 form-control textbox-dg font-weight-bold text-center" type="password" required>
     </div>
     <span id="lpass" class="error" aria-live="polite"></span>
     <div class="form-group">
-        <input autocomplete="new-password" asp-for="ConfirmPassword" id="confirmPassword" placeholder="Підтвердіть пароль" class="form-control mb-3 textbox-dg font-weight-bold text-center" type="password">
+        <input autocomplete="new-password" asp-for="ConfirmPassword" id="confirmPassword" placeholder="Підтвердіть пароль" class="form-control mb-3 textbox-dg font-weight-bold text-center" type="password" required>
     </div>
     <span id="lcpass" class="error" aria-live="polite"></span>
     <button class="btn btn-success btn-lg float-md-none mb-3" type="submit">Додати</button>
