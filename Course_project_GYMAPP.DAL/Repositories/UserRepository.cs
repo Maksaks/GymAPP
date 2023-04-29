@@ -61,5 +61,22 @@ namespace Course_project_GYMAPP.DAL.Repositories
             pattern = "%" + pattern + "%";
             return await appDb.User.Where(p => EF.Functions.Like(p.Name, pattern)).ToListAsync();
         }
+
+        public async Task<int> GetCountAllUsers() // Загальна кількість користувачів
+        {
+            return await appDb.User.CountAsync();
+        }
+        public async Task<int> GetCountNewUserLastWeek() // Кількість нових користувачів за тиждень
+        {
+            return await appDb.User.Where(p => p.DateReg >= DateTime.Today.AddDays(-7)).CountAsync();
+        }
+        public async Task<int> GetCountActiveUsers() // Кількість активних користувачів
+        {
+            return await appDb.User.Where(p => p.CardBefore >= DateTime.Today).CountAsync();
+        }
+        public async Task<int> GetCountUsersVisitedToday() // Кількість відвідувачів за сьогодні
+        {
+            return await appDb.User.Where(p => p.LastVisit == DateTime.Today).CountAsync();
+        }
     }
 }

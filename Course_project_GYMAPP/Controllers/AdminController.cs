@@ -26,7 +26,7 @@ namespace Course_project_GYMAPP.Controllers
         {
             if (TempData["id"] == "" || TempData["id"] == null)
             {
-                TempData["id"] = "v-pills-card-tab";
+                TempData["id"] = "v-pills-users-tab";
             }
             return View();
         }
@@ -67,13 +67,25 @@ namespace Course_project_GYMAPP.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPersonalCardsData()
         {
-            var resp = await personalCardService.GetPersonalCards();
+            var resp = await personalCardService.GetPersonalCardsForAdmin();
             if (resp.StatusCode != Domain.Enum.StatusCode.OK)
             {
                 return NotFound();
             }
             var cards = resp.Data;
             return PartialView("GetPersonalCardsData", cards);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetStatistics()
+        {
+            var resp = await userService.GetStatistics();
+            if (resp.StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                return NotFound();
+            }
+            var stats = resp.Data;
+            return PartialView("GetStatistics", stats);
         }
 
         [HttpGet]

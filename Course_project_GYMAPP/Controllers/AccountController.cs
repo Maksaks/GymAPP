@@ -83,7 +83,8 @@ namespace Course_project_GYMAPP.Controllers
                 {
                     Name = res.Data.Name,
                     Age = res.Data.Age,
-                    Number= res.Data.Number
+                    Number= res.Data.Number,
+                    CardBefore = res.Data.CardBefore
                 });
             }
             return View();

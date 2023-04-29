@@ -15,9 +15,10 @@ namespace Course_project_GYMAPP.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var cards = await personalCard.GetPersonalCards();
+            return View("Index",cards.Data);
         }
 
         [HttpPost]
@@ -42,7 +43,7 @@ namespace Course_project_GYMAPP.Controllers
                     return RedirectToAction("Register", "Account");
                 }
             }
-            return View();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

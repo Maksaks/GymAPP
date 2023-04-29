@@ -219,3 +219,17 @@ footer {
     max-height: 620px;
     overflow: auto;
 }
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.content {
+    min-height: 100%;
+}
+
+.content-inside {
+    padding: 20px;
+    padding-bottom: 50px;
+}

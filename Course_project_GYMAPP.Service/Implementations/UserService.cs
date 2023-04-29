@@ -332,5 +332,32 @@ namespace Course_project_GYMAPP.Service.Implementations
                 };
             }
         }
+
+        public async Task<BaseResponse<List<string>>> GetStatistics()
+        {
+            var baseResponse = new BaseResponse<List<string>>();
+            try
+            {
+                var list = new List<string>
+                {
+                    "Загальна кількість користувачів: " + await _userRepository.GetCountAllUsers(),
+                    "Кількість нових користувачів за тиждень: " + await _userRepository.GetCountNewUserLastWeek(),
+                    "Кількість активних користувачів: " + await _userRepository.GetCountActiveUsers(),
+                    "Кількість відвідувачів за сьогодні: " + await _userRepository.GetCountUsersVisitedToday()
+                };
+                baseResponse.Data = list;
+                baseResponse.Description = "Статистику отримано";
+                baseResponse.StatusCode = StatusCode.OK;
+                return baseResponse;
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<string>>()
+                {
+                    Description = $"[GetStatistics] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Course_project_GYMAPP.Controllers
             this.trainerService = trainerService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int i = 0)
         {
             var res = await gymUserService.GetUsers();
             if(res.StatusCode == Domain.Enum.StatusCode.OK)
@@ -29,6 +29,7 @@ namespace Course_project_GYMAPP.Controllers
             }
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> AddGymUser(string name)
         {
@@ -37,10 +38,10 @@ namespace Course_project_GYMAPP.Controllers
             if (res.StatusCode == Domain.Enum.StatusCode.OK)
             {
                 Alert(res.Description, Domain.Enum.NotificationType.success);
-                return RedirectToAction("Index", "Trainer");
+                return Ok();
             }
             Alert(res.Description, Domain.Enum.NotificationType.error);
-            return RedirectToAction("Index", "Trainer");
+            return Ok();
         }
         [HttpPost]
         public async Task<IActionResult> DeleteGymUser(int id)
@@ -94,6 +95,14 @@ namespace Course_project_GYMAPP.Controllers
                 return View(res.Data);
             }
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetSearchUserResult(string term)
+        {
+            var res = await userService.Search(term);
+            var js = Json(res.Data);
+            return js;
         }
     }
 }

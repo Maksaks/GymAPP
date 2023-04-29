@@ -136,9 +136,9 @@ namespace Course_project_GYMAPP.Service.Implementations
             }
         }
 
-        public async Task<BaseResponse<IEnumerable<PersonalCard>>> GetPersonalCards()
+        public async Task<BaseResponse<List<SellPersonalCardViewModel>>> GetPersonalCards()
         {
-            var baseResponse = new BaseResponse<IEnumerable<PersonalCard>>();
+            var baseResponse = new BaseResponse<List<SellPersonalCardViewModel>>();
             try
             {
                 var cards = await personalCardRepository.Select();
@@ -148,20 +148,56 @@ namespace Course_project_GYMAPP.Service.Implementations
                     baseResponse.StatusCode = StatusCode.UserNotFound;
                     return baseResponse;
                 }
-                baseResponse.Data = cards;
+                var cardsVM = new List<SellPersonalCardViewModel>();
+                foreach (var card in cards)
+                {
+                    cardsVM.Add(new SellPersonalCardViewModel()
+                    {
+                        ID= card.ID,
+                        Name= card.Name,
+                        Duration= card.Duration,
+                        Price= card.Price
+                    });
+                }
+                baseResponse.Data = cardsVM;
                 baseResponse.StatusCode = StatusCode.OK;
                 return baseResponse;
             }
             catch (Exception ex)
             {
-                return new BaseResponse<IEnumerable<PersonalCard>>()
+                return new BaseResponse<List<SellPersonalCardViewModel>>()
                 {
                     Description = $"[GetPersonalCards] : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError
                 };
             }
         }
+        public async Task<BaseResponse<List<PersonalCard>>> GetPersonalCardsForAdmin()
+        {
+            var baseResponse = new BaseResponse<List<PersonalCard>>();
+            try
+            {
+                var cards = await personalCardRepository.Select();
+                if (cards.Count == 0)
+                {
+                    baseResponse.Description = "Картки не знайдено";
+                    baseResponse.StatusCode = StatusCode.UserNotFound;
+                    return baseResponse;
+                }
 
+                baseResponse.Data = cards;
+                baseResponse.StatusCode = StatusCode.OK;
+                return baseResponse;
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<PersonalCard>>()
+                {
+                    Description = $"[GetPersonalCards] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
         public async Task<BaseResponse<bool>> EditPersonalCard(AdminEditPersonalCardViewModel userVM)
         {
             var baseResponse = new BaseResponse<bool>();

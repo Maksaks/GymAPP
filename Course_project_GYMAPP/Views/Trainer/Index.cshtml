@@ -5,24 +5,25 @@
 }
 
 
-<div class="row">
-    <div class="col-sm-2">
-        <button onclick="showModal('../Trainer/Register', 0)" type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Новий користувач</button>
+
+
+<div class="container bg-light border border-2 mt-5 p-3" style="height:750px">
+<div class="row mb-3">
+    <div class="col-md-2">
+            <button onclick="showModal('../Trainer/Register', 0)" type="submit" class="btn  btn-dark" id="input-group-button-right">Новий користувач</button>
     </div>
-    <div class="col-sm-2">
-        <button type="submit" class="btn btn-outline-secondary" onclick="showModal('../Trainer/NewCard', 0)" id="input-group-button-right">Оформити картку</button>
-    </div>
-    <div class="col-sm-7">
-        <form asp-action="AddGymUser" asp-controller="Trainer" method="post">
-            <div class="input-group">
-                <input name="name" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="input-group-button-right">
-                <button type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Додати</button>
-            </div>
-        </form>
+    <div class="col-md-2">
+            <button type="submit" class="btn btn-dark" onclick="showModal('../Trainer/NewCard', 0)" id="input-group-button-right">Оформити картку</button>
     </div>
 </div>
-
-<table class="table table-hover mt-5">
+<div class="row mb-2">
+    <div class="input-group center-block">
+        <select id="chooseUser" class="form-control" style="height:50px;font-size:15px;"></select>
+        <button type="submit" class="btn btn-dark" style="height:27px;font-size:15px;text-align:start;" id="addButton">Додати</button>
+    </div>
+</div>
+<div class="tableBodyScroll">
+<table class="table table-hover" id="tableGymUsers">
     <thead>
         <tr>
             <th scope="col">ID</th>
@@ -47,3 +48,60 @@
         }
     </tbody>
 </table>
+</div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#chooseUser").select2({
+            minimumInputLength: 2,
+            placeholder: "Введіть ім'я користувача", 
+            allowClear: true,
+            ajax: {
+                type: "POST",
+                url: "../Trainer/GetSearchUserResult",
+                dataType: "json",
+                data: function (params) {
+                    var query = {
+                        term: params.term
+                    };
+                    return query;
+                },
+                processResults: function (result) {
+                    return {
+                        results: $.map(result, function (val, index) {
+                            return {
+                                id: val.id, 
+                                text: val.name
+                            };
+                        }),
+                    };
+                }
+            }
+        });
+    });
+
+
+    document.getElementById('addButton').addEventListener('click', function () {
+        var name = $("#chooseUser").select2("data")[0].text;
+        $.ajax({
+            type: 'POST',
+            url: '../Trainer/AddGymUser',
+            data: { "name": name },
+            success: function (response) {
+                location.href = '../Trainer/Index';
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    });
+
+</script>
+
+
+@section Scripts
+{
+    <script src="~/lib/select2/js/select2.full.min.js"></script>
+    <script src="~/js/select2.js"></script>
+}

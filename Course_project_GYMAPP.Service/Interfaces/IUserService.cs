@@ -21,5 +21,6 @@ namespace Course_project_GYMAPP.Service.Interfaces
         public Task<BaseResponse<bool>> EditUser(AdminEditUserViewModel userVM);
         public Task<BaseResponse<bool>> NewCardForUser(NewCardViewModel cardViewModel);
         public Task<BaseResponse<List<User>>> Search(string pattern);
+        public Task<BaseResponse<List<string>>> GetStatistics();
     }
 }

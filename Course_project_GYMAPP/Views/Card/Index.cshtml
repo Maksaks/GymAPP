@@ -1,33 +1,26 @@
-﻿@{
+﻿@model List<Course_project_GYMAPP.Domain.ViewModels.SellPersonalCardViewModel>
+
+@{
     ViewData["Title"] = "Клубні картки";
 }
 <div class="container">
-    <form autocomplete="on" method="post" asp-controller="Card" asp-action="Index">
-    <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
-        <div class="card m-3" style="width: 25rem;">
-            <img src="img/card.png" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Картка на тиждень</h5>
-                <p class="card-text">Вартість 200 грн</p>
-                <button class="mr-3 btn btn-success" asp-route-id="1">Придбати</button>
-            </div>
+    
+        <div class="row mt-5">
+            @foreach(var item in Model)
+            {
+                <div class="col-6 mt-3">
+                    <div class="card p-3">
+                        <form autocomplete="on" method="post" asp-controller="Card" asp-action="Index" asp-route-id="@item.ID">
+                            <img src="img/card.png" style="height:350px; width:500px;" class="card-img-top" alt="card-grid-image">
+                            <div class="card-body text-center align-content-center">
+                                <h5 class="card-title" style="font-size:30px;">Назва: @item.Name</h5>
+                                <p class="card-text" style="font-size:25px;">Термін дії: @item.Duration</p>
+                                <p class="card-text" style="font-size:25px;">Вартість: @item.Price</p>
+                                <button class="mr-3 btn btn-success" style="font-size:25px;">Придбати</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
         </div>
-        <div class="card m-3" style="width: 25rem;">
-            <img src="img/card.png" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Картка на місяць</h5>
-            <p class="card-text">Вартість 600 грн</p>
-                <button class="mr-3 btn btn-success" asp-route-id="2">Придбати</button>
-            </div>
-        </div>
-        <div class="card m-3" style="width: 25rem;">
-            <img src="img/card.png" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Картка на рік</h5>
-                <p class="card-text">Вартість 6000</p>
-                <button class="mr-3 btn btn-success" asp-route-id="3">Придбати</button>
-            </div>
-        </div>
-    </div>
-</form>
 </div>

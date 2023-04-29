@@ -10,5 +10,9 @@ namespace Course_project_GYMAPP.DAL.Interfaces
     public interface IUserRepository: IBaseRepository<User>
     {
         public Task<User> GetByName(string Name);
+        public Task<int> GetCountAllUsers();
+        public Task<int> GetCountNewUserLastWeek();
+        public Task<int> GetCountActiveUsers();
+        public Task<int> GetCountUsersVisitedToday();
     }
 }

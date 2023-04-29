@@ -1,0 +1,28 @@
+﻿@model List<Course_project_GYMAPP.Domain.Entity.InGymUser>
+
+
+<table class="table table-hover" id="tableGymUsers">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">NAME</th>
+            <th scope="col">IN GYM FROM TIME</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <th scope="row">@item.Id</th>
+                    <td>@item.Name</td>
+                    <td>@item.timeInGym</td>
+                    <td>
+                        <form asp-action="DeleteGymUser" asp-controller="Trainer" method="post" asp-route-id="@item.Id">
+                            <button type="submit" class="btn btn-success">Видалити</button>
+                        </form>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

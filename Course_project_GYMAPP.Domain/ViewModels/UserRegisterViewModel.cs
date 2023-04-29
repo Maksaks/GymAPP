@@ -26,7 +26,7 @@ namespace Course_project_GYMAPP.Domain.ViewModels
 
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Підтвердіть пароль")]
-        [Compare("Password", ErrorMessage = "Пароли не співпадають")]
+        [Compare("Password", ErrorMessage = "Паролі не співпадають")]
         public string ConfirmPassword { get; set; }
     }
 }

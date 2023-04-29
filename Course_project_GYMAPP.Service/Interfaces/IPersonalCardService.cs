@@ -12,7 +12,8 @@ namespace Course_project_GYMAPP.Service.Interfaces
     public interface IPersonalCardService
     {
         public Task<BaseResponse<bool>> CreatePersonalCard(PersonalCardViewModel cardVM);
-        public Task<BaseResponse<IEnumerable<PersonalCard>>> GetPersonalCards();
+        public Task<BaseResponse<List<SellPersonalCardViewModel>>> GetPersonalCards();
+        public Task<BaseResponse<List<PersonalCard>>> GetPersonalCardsForAdmin();
         public Task<BaseResponse<PersonalCard>> GetPersonalCard(int id);
         public Task<BaseResponse<bool>> DeletePersonalCard(int id);
         public Task<BaseResponse<PersonalCard>> EditPersonalCard(int id, PersonalCardViewModel cardVM);
