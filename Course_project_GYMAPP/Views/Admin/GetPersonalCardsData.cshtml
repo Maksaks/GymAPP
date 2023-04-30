@@ -3,7 +3,7 @@
 
 <div class="row p-2">
     <div class="col-sm-2">
-        <button onclick="showModal('../Admin/AddPersonalCard', 0)" type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Нова картка</button>
+        <button onclick="showModal('../Admin/AddPersonalCard', 0)" type="submit" class="btn btn-dark" id="input-group-button-right">Нова картка</button>
     </div>
     <div class="col-sm-7">
         <div class="input-group">
@@ -31,10 +31,10 @@
                 <td>@user.Name</td>
                 <td>@user.Price</td>
                 <td>@user.Duration</td>
-                <td><button type="submit" class="btn btn-outline-secondary" id="input-group-button-right" onclick="showModal('../Admin/GetPersonalCard', @user.ID)">Редагувати</button></td>
+                <td><button type="submit" class="btn btn-dark" id="input-group-button-right" onclick="showModal('../Admin/GetPersonalCard', @user.ID)">Редагувати</button></td>
                 <td>
                     <form method="post" asp-controller="Admin" asp-action="DeletePersonalCard" asp-route-id="@user.ID">
-                        <button type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Видалити</button>
+                        <button type="submit" class="btn btn-dark" id="input-group-button-right">Видалити</button>
                             </form>
                 </td>
             </tr>

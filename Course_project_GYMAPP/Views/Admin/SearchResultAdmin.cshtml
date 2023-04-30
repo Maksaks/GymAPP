@@ -18,10 +18,10 @@
                 <tr>
                     <th scope="row">@user.Id</th>
                     <td>@user.Name</td>
-                    <td><button type="submit" class="btn btn-outline-secondary" id="input-group-button-right" onclick="showModal('../Admin/GetAdmin', @user.Id)">Редагувати</button></td>
+                    <td><button type="submit" class="btn btn-dark" id="input-group-button-right" onclick="showModal('../Admin/GetAdmin', @user.Id)">Редагувати</button></td>
                     <td>
                         <form method="post" asp-controller="Admin" asp-action="DeleteAdmin" asp-route-id="@user.Id">
-                            <button type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Видалити</button>
+                            <button type="submit" class="btn btn-dark" id="input-group-button-right">Видалити</button>
                         </form>
                     </td>
                 </tr>

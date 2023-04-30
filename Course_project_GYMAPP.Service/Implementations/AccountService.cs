@@ -21,17 +21,20 @@ namespace Course_project_GYMAPP.Service.Implementations
         private readonly IUserRepository userRepository;
         private readonly ITrainerRepository trainerRepository;
         private readonly IAdminRepository adminRepository;
+        private readonly IGymUserRepository gymUserRepository;
 
         public AccountService(IUserRepository userRepository, ITrainerRepository trainerRepository,
-            IAdminRepository adminRepository)
+            IAdminRepository adminRepository, IGymUserRepository gymUserRepository)
         {
             this.userRepository = userRepository;
             this.trainerRepository = trainerRepository;
             this.adminRepository = adminRepository;
+            this.gymUserRepository = gymUserRepository;
         }
 
         public async Task<BaseResponse<bool>> EditUserData(string lastname, UserEditDataViewModel model)
         {
+            var baseResponse = new BaseResponse<bool>();
             try
             {
                 var user = new BaseUser();
@@ -40,18 +43,52 @@ namespace Course_project_GYMAPP.Service.Implementations
                     user = await CheckName(model.Name);
                     if (user != null)
                     {
-                        return new BaseResponse<bool>()
-                        {
-                            Data = false,
-                            Description = "Це ім'я вже зайнято",
-                            StatusCode = StatusCode.ChangeName
-                        };
+                        baseResponse.Description = "Це імя вже зайнято";
+                        baseResponse.StatusCode = StatusCode.ChangeName;
+                        return baseResponse;
+                    }
+                    var gymUser = await gymUserRepository.GetByName(lastname);
+                    if (gymUser != null)
+                    {
+                       gymUser.Name = model.Name;
+                        await gymUserRepository.Update(gymUser);
                     }
                 }
+                
                 var eduser = await userRepository.GetByName(lastname);
                 eduser.Name = model.Name;
                 eduser.Age= model.Age;
                 eduser.Number = model.Number;
+                if (model.Password != null)
+                {
+                    if(model.Password.Length <= 8)
+                    {
+                        baseResponse.Description = "Пароль має бути понад 8 символів";
+                        baseResponse.StatusCode = StatusCode.InternalServerError;
+                        return baseResponse;
+                    }
+                    if (model.ConfirmPassword != null)
+                    {
+                        if (model.Password == model.ConfirmPassword)
+                        {
+                            user.Password = Encryption.EncrPassowrd(model.Password);
+                        }
+                        else
+                        {
+                            baseResponse.Description = "Паролі не співпадають";
+                            baseResponse.StatusCode = StatusCode.InternalServerError;
+                            return baseResponse;
+                        }
+                    }
+                    else
+                    {
+                        baseResponse.Description = "Підтвердіть пароль";
+                        baseResponse.StatusCode = StatusCode.InternalServerError;
+                        return baseResponse;
+                    }
+                }
+
+
                 await userRepository.Update(eduser);
                 return new BaseResponse<bool>()
                 {
@@ -64,7 +101,7 @@ namespace Course_project_GYMAPP.Service.Implementations
             {
                 return new BaseResponse<bool>()
                 {
-                    Description = $"[Login] : {ex.Message}",
+                    Description = $"[EditUserData] : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError
                 };
             }
@@ -79,7 +116,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 {
                     return new BaseResponse<ClaimsIdentity>()
                     {
-                        Description = "Користувача з таким ім'ям не знайдено. Необхідно зареєструватися"
+                        Description = "Користувача з таким імям не знайдено. Необхідно зареєструватися"
                     };
                 }
 
@@ -137,7 +174,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 {
                     return new BaseResponse<ClaimsIdentity>()
                     {
-                        Description = "Користувача з таким ім'ям вже зареєстровано у системі"
+                        Description = "Користувача з таким імям вже зареєстровано у системі"
                     };
                 }
 

@@ -20,10 +20,34 @@
         <div class="row">
             <div class="col-1 d-flex align-items-center justify-content-center" id="counterUsers">
             </div>
-            <h1 class="header col-11">
+            <h1 class="header col-10">
                 <img  src="~/img/logo.png">
                 FERRUM GYM
             </h1>
+            <div class="col-1" id="counterUsers">
+                <div class="btn-group-vertical float-end">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @if (User.IsInRole("User"))
+                        {
+                            <form method="get" asp-controller="Account" asp-action="EditProfile">
+                                <button type="submit" class="btn btn-outline-light m-2"><img src="~/img/profile.png" width="48" height="48" /></button>
+                            </form>
+                        }
+                        <form method="post" asp-controller="Account" asp-action="Logout">
+                            <button type="submit" class="btn btn-outline-light m-2"><img src="~/img/logout.png" width="48" height="48" /></button>
+                        </form>
+                        
+                    }
+                    else
+                    {
+                        <form method="get" asp-controller="Account" asp-action="Login">
+                            <button type="submit" class="btn btn-outline-light m-2"><img src="~/img/login.png" width="60" height="60" /></button>
+                        </form>
+                    }
+                </div>
+                <label class="float-end m-3" style="font-size:15px;"><b>@User.Identity.Name</b></label>
+            </div>
         </div>
         
     <nav id="mynav">
@@ -47,17 +71,6 @@
             
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li>
-                        <form method="post" asp-controller="Account" asp-action="Logout">
-                            <input type="submit" value="Вихід" />
-                        </form>
-                    </li>
-                    @if (User.IsInRole("User"))
-                    {
-                        <li>
-                            <a asp-area="" asp-controller="Account" asp-action="EditProfile">Профіль</a>
-                        </li>
-                    }
                     @if (User.IsInRole("Admin"))
                     {
                         <li>
@@ -70,12 +83,6 @@
                             <a asp-area="" asp-controller="Trainer" asp-action="Index">Відвідувачі</a>
                         </li>
                     }
-                }
-                else
-                {
-                    <li>
-                        <a asp-area="" asp-controller="Account" asp-action="Login">Вхід</a>
-                    </li>
                 }
             </ul>
     </nav>
@@ -165,7 +172,7 @@
     </script>
 
     <script src="~/lib/select2/js/select2.full.min.js"></script>
-    <script src="~/js/select2.js"></script>
+    <script src="~/lib/select2/js/select2.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

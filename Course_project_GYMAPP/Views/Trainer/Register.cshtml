@@ -2,29 +2,45 @@
 
 <form asp-controller="Trainer" asp-action="Register" method="post" id="registerForm">
     <div class="form-group">
-        <input asp-for="Name" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я" type="text">
+        <input asp-for="Name" id="name" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я" type="text" required>
+    </div>
+    <span id="lname" class="error" aria-live="polite"></span>
+    <div class="form-group">
+        <input asp-for="Age" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Вік" type="number" required>
     </div>
     <div class="form-group">
-        <input asp-for="Age" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Вік" type="number">
+        <input asp-for="Number" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Номер телефону" type="number" required>
     </div>
     <div class="form-group">
-        <input asp-for="Number" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Номер телефону" type="number">
-    </div>
-    <div class="form-group">
-        <input autocomplete="new-password" asp-for="Password" id="password" placeholder="Пароль" class="mb-3 form-control textbox-dg font-weight-bold text-center" type="password">
+        <input autocomplete="new-password" asp-for="Password" id="password" placeholder="Пароль" class="mb-3 form-control textbox-dg font-weight-bold text-center" type="password" required>
     </div>
     <span id="lpass" class="error" aria-live="polite"></span>
     <div class="form-group">
-        <input autocomplete="new-password" asp-for="ConfirmPassword" id="confirmPassword" placeholder="Підтвердіть пароль" class="form-control mb-3 textbox-dg font-weight-bold text-center" type="password">
+        <input autocomplete="new-password" asp-for="ConfirmPassword" id="confirmPassword" placeholder="Підтвердіть пароль" class="form-control mb-3 textbox-dg font-weight-bold text-center" type="password" required>
     </div>
     <span id="lcpass" class="error" aria-live="polite"></span>
     <div class="modal-footer">
-        <button class="btn btn-success btn-lg float-md-none mb-3" type="submit">Створити нового користувача</button>
+        <button class="btn btn-dark btn-lg float-md-none mb-3" type="submit">Створити нового користувача</button>
     </div>
 </form>
 
 
 <script>
+    var res;
+    document.getElementById("name").onchange = function(){
+        console.log(this.value);
+        CheckName(this.value);
+        console.log(res);
+        if(res != "true"){
+            document.getElementById("lname").textContent = "Це ім'я вже зайнято";
+            document.getElementById("lname").className = 'error active';
+        }
+        else{
+            document.getElementById("lname").textContent = '';
+            document.getElementById("lname").className = 'error ';
+        }
+    }
+
     document.getElementById("password").oninput = function (event) {
         if (document.getElementById("password").value.length < 8) {
             document.getElementById("lpass").textContent = 'Пароль має містити понад 8 символів';
@@ -46,15 +62,38 @@
     }
 
     document.getElementById("registerForm").onsubmit = function (event) {
-        if (document.getElementById("password").value.length != 0) {
-            if (document.getElementById("password").value.length < 8) {
-                event.preventDefault();
+        CheckName(document.getElementById("name").value);
+        if (document.getElementById("name").value.length != 0){
+            if (document.getElementById("password").value.length != 0) {
+                if (document.getElementById("password").value.length < 8 || res == "false") {
+                    event.preventDefault();
+                }
+                else if (document.getElementById("password").value != document.getElementById("confirmPassword").value) {
+                    document.getElementById("lcpass").textContent = 'Паролі не співпадають';
+                    document.getElementById("lcpass").className = 'error active';
+                    event.preventDefault();
+                }
             }
-            else if (document.getElementById("password").value != document.getElementById("confirmPassword").value) {
-                document.getElementById("lcpass").textContent = 'Паролі не співпадають';
-                document.getElementById("lcpass").className = 'error active';
+            else if (res == "false") {
                 event.preventDefault();
             }
         }
+    }
+
+
+    function CheckName(name){
+        $.ajax({
+            type: 'POST',
+            url: '../Account/CheckName',
+            dataType: "json",
+            data: { "name": name },
+            success: function (response) {
+                console.log(response.item2);
+                res = response.item2;
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
     }
 </script>

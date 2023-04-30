@@ -1,13 +1,97 @@
-﻿@model Course_project_GYMAPP.Domain.ViewModels.NewCardViewModel
+﻿
 
-<form method="post" asp-controller="Trainer" asp-action="NewCard" id="editForm">
+
+<div>
     <div class="form-group">
-        <input asp-for="Id" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Номер клубної картки" type="text">
+        <select id="chooseCard" class="form-control" style="height:50px;font-size:15px;"></select>
     </div>
     <div class="form-group">
-        <input asp-for="Name" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я клієнта" type="text">
+        <select id="chooseUserName" class="form-control" style="height:50px;font-size:15px;"></select>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Оформити картку</button>
+        <button id="subButton" type="submit" class="btn btn-dark">Оформити картку</button>
     </div>
-</form>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#chooseCard").select2({
+            dropdownParent: $('#modal'),
+            minimumInputLength: 1,
+            placeholder: "Введіть назву картки",
+            allowClear: true,
+            ajax: {
+                type: "POST",
+                url: "../Trainer/GetSearchCardResult",
+                dataType: "json",
+                data: function (params) {
+                    var query = {
+                        term: params.term
+                    };
+                    return query;
+                },
+                processResults: function (result) {
+                    return {
+                        results: $.map(result, function (val, index) {
+                            return {
+                                id: val.id,
+                                text: val.name
+                            };
+                        }),
+                    };
+                }
+            }
+        });
+        $("#chooseUserName").select2({
+            dropdownParent: $('#modal'),
+            minimumInputLength: 1,
+            placeholder: "Введіть ім'я користувача",
+            allowClear: true,
+            ajax: {
+                type: "POST",
+                url: "../Trainer/GetSearchUserResult",
+                dataType: "json",
+                data: function (params) {
+                    var query = {
+                        term: params.term
+                    };
+                    return query;
+                },
+                processResults: function (result) {
+                    return {
+                        results: $.map(result, function (val, index) {
+                            return {
+                                id: val.id,
+                                text: val.name
+                            };
+                        }),
+                    };
+                }
+            }
+        });
+    });
+
+    document.getElementById('subButton').addEventListener('click', function () {
+        var cardId = $("#chooseCard").select2("data")[0].id;
+        var userName = $("#chooseUserName").select2("data")[0].text;
+        $.ajax({
+            type: 'POST',
+            url: '../Trainer/NewCard',
+            data: { "userName": userName, "cardId": cardId },
+            success: function (response) {
+                location.href = '../Trainer/Index';
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    });
+</script>
+
+@section Scripts
+{
+    <script src="~/lib/select2/js/select2.full.min.js"></script>
+    <script src="~/lib/select2/js/select2.js"></script>
+}

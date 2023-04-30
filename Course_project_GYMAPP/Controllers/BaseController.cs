@@ -7,7 +7,7 @@ namespace Course_project_GYMAPP.Controllers
     {
         public void Alert(string message, NotificationType notificationType)
         {
-            var msg = "<script>swal('" + notificationType.ToString().ToUpper() + "', '" + message + "','" + notificationType + "');</script>";
+            var msg = "<script>swal('" + notificationType.ToString().ToUpper() + "', '" + message.Replace('\'', '`') + "','" + notificationType + "');</script>";
             TempData["notification"] = msg;
         }
 

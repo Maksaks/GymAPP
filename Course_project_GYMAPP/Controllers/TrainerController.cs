@@ -13,11 +13,13 @@ namespace Course_project_GYMAPP.Controllers
         private readonly IGymUserService gymUserService;
         private readonly IUserService userService;
         private readonly ITrainerService trainerService;
-        public TrainerController(IGymUserService gymUserService, IUserService userService, ITrainerService trainerService)
+        private readonly IPersonalCardService personalCardService;
+        public TrainerController(IGymUserService gymUserService, IUserService userService, ITrainerService trainerService, IPersonalCardService personalCardService)
         {
             this.gymUserService = gymUserService;
             this.userService = userService;
             this.trainerService = trainerService;
+            this.personalCardService = personalCardService;
         }
         [HttpGet]
         public async Task<IActionResult> Index(int i = 0)
@@ -74,16 +76,16 @@ namespace Course_project_GYMAPP.Controllers
         public async Task<IActionResult> NewCard() => PartialView();
 
         [HttpPost]
-        public async Task<IActionResult> NewCard(NewCardViewModel cardViewModel)
+        public async Task<IActionResult> NewCard(string userName, int cardId)
         {
-            var res = await userService.NewCardForUser(cardViewModel);
+            var res = await userService.NewCardForUser(userName, cardId);
             if (res.StatusCode == Domain.Enum.StatusCode.OK)
             {
                 Alert(res.Description, Domain.Enum.NotificationType.success);
-                return RedirectToAction("Index", "Trainer");
+                return Ok();
             }
             Alert(res.Description, Domain.Enum.NotificationType.warning);
-            return RedirectToAction("Index", "Trainer");
+            return Ok();
         }
 
         [HttpGet]
@@ -101,6 +103,13 @@ namespace Course_project_GYMAPP.Controllers
         public async Task<IActionResult> GetSearchUserResult(string term)
         {
             var res = await userService.Search(term);
+            var js = Json(res.Data);
+            return js;
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetSearchCardResult(string term)
+        {
+            var res = await personalCardService.Search(term);
             var js = Json(res.Data);
             return js;
         }

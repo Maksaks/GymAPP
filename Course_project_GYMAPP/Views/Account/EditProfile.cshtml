@@ -7,37 +7,56 @@
 
 <div style="padding: 20px;"></div>
 
-<div class="container py-5">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                    <span class="anchor"></span>
-                    <div class="card card-account card-outline-secondary border border-white">
+<div class="row  border border-black border-3">
+    <div class="offset-1 col-4">
+        <div class="row justify-content-center">
+            <div class="">
+                <span class="anchor"></span>
+                <div class="row">
+                    <div class="card card-account card-light">
                         <div class="card-header">
-                            <h3 class="mb-0 text-center paragraphHome text-black">Інформація</h3>
+                            <h3 class="mb-0 text-center paragraphHome text-black" style="font-size:40px;">Інформація</h3>
                         </div>
                         <div class="card-body">
-                            <label style="font-size:20px"><b>Ваш абонемент діє до:</b> @Model.CardBefore</label>
+                            <label class="row" style="font-size:30px"><b>Ваш абонемент діє до:</b> @Model.CardBefore</label>
+                            <label class="row" style="font-size:30px"><b>Останнє відвідування залу:</b> @Model.LastVisit</label>
+                            <label class="row" style="font-size:30px"><b>Дата реєстрації акаунту:</b> @Model.DataReg</label>
                         </div>
                     </div>
-                    <div class="card card-account card-outline-secondary border border-white">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="offset-1 col-5  border border-black border-3">
+        <div class="row justify-content-center">
+            <div class="">
+                <span class="anchor"></span>
+                <div class="row">
+                    <div class="card card-account card-dark">
                         <div class="card-header">
-                            <h3 class="mb-0 text-center paragraphHome text-black">Редагування особистої інформації</h3>
+                            <h3 class="mb-0 text-center paragraphHome text-black" style="font-size:40px;">Редагування особистої інформації</h3>
                         </div>
                         <div class="card-body">
                             <form asp-controller="Account" asp-action="EditProfile">
-                                <div asp-validation-summary="All" style="font-size:23px; font-family:Impact" class="text-danger text-center"></div>
                                 <div class="form-group">
-                                    <input asp-for="Name" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я" type="text">
+                                    <input asp-for="Name" style="font-size:25px;" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Ім'я" type="text" required>
                                 </div>
                                 <div class="form-group">
-                                    <input asp-for="Age" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Вік" type="number">
+                                    <input asp-for="Age" style="font-size:25px;" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Вік" type="number" required>
                                 </div>
                                 <div class="form-group">
-                                    <input asp-for="Number" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Номер телефону" type="number">
+                                    <input asp-for="Number" style="font-size:25px;" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Номер телефону" type="text" required>
                                 </div>
-                                <button class="btn btn-success btn-lg float-md-none mb-3" type="submit">Зберегти зміни</button>
+                                <div class="form-group">
+                                    <input asp-for="Password" style="font-size:25px;" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Пароль" type="password">
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="ConfirmPassword" style="font-size:25px;" class="form-control textbox-dg font-weight-bold text-center mb-3" placeholder="Підтвердіть пароль" type="password">
+                                </div>
+                                <input asp-for="CardBefore" hidden />
+                                <input asp-for="LastVisit" hidden />
+                                <input asp-for="DataReg" hidden />
+                                <button class="btn btn-dark btn-lg float-md-none mb-3" style="font-size:30px;" type="submit">Зберегти зміни</button>
                             </form>
                         </div>
                     </div>

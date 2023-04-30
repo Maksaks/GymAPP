@@ -3,7 +3,11 @@ using Course_project_GYMAPP.Domain.Entity;
 using Course_project_GYMAPP.Domain.Enum;
 using Course_project_GYMAPP.Domain.ViewModels;
 using Course_project_GYMAPP.Service.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Course_project_GYMAPP.Domain.Response;
 
 namespace Course_project_GYMAPP.Controllers
 {
@@ -202,6 +206,18 @@ namespace Course_project_GYMAPP.Controllers
             {
                 return NotFound();
             }
+            if ((await adminService.GetAdminByName(User.Identity.Name)).StatusCode == Domain.Enum.StatusCode.UserNotFound)
+            {
+                var claims = new List<Claim>
+                    {
+                        new Claim(ClaimsIdentity.DefaultNameClaimType, adminVM.Name),
+                        new Claim(ClaimsIdentity.DefaultRoleClaimType, "Admin")
+                    };
+                var clid = new ClaimsIdentity(claims, "ApplicationCookie",
+                ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(clid));
+            }
             TempData["id"] = "v-pills-admins-tab";
             return RedirectToAction("Index", "Admin");
             
@@ -234,10 +250,26 @@ namespace Course_project_GYMAPP.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteAdmin(int id)
         {
-            var resp = await adminService.DeleteAdmin(id);
+            var resp = new BaseResponse<bool>();
+            if((await adminService.GetAdmins()).Data.Count() != 1)
+            {
+                resp = await adminService.DeleteAdmin(id);
+            }
+            else
+            {
+                TempData["id"] = "v-pills-admins-tab";
+                Alert("Не можливо видалити останнього адміністратора!Додайте іншого та спробуйте ще раз.", NotificationType.error);
+                return RedirectToAction("Index", "Admin");
+            }
             if (resp.StatusCode != Domain.Enum.StatusCode.OK)
             {
                 return NotFound();
+            }
+            if ((await adminService.GetAdminByName(User.Identity.Name)).StatusCode != Domain.Enum.StatusCode.OK)
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                Alert("Ви видалили власний акаунт!", NotificationType.warning);
+                return RedirectToAction("Index", "Home");
             }
             TempData["id"] = "v-pills-admins-tab";
             return RedirectToAction("Index", "Admin");

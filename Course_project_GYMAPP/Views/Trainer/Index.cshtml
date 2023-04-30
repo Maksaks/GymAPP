@@ -6,7 +6,6 @@
 
 
 
-
 <div class="container bg-light border border-2 mt-5 p-3" style="height:750px">
 <div class="row mb-3">
     <div class="col-md-2">
@@ -41,7 +40,7 @@
                 <td>@item.timeInGym</td>
                 <td>
                     <form asp-action="DeleteGymUser" asp-controller="Trainer" method="post" asp-route-id="@item.Id">
-                        <button type="submit" class="btn btn-success">Видалити</button>
+                        <button type="submit" class="btn btn-dark">Видалити</button>
                     </form>
                 </td>
             </tr>
@@ -103,5 +102,5 @@
 @section Scripts
 {
     <script src="~/lib/select2/js/select2.full.min.js"></script>
-    <script src="~/js/select2.js"></script>
+    <script src="~/lib/select2/js/select2.js"></script>
 }

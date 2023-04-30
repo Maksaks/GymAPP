@@ -1,4 +1,5 @@
 ﻿
+using Course_project_GYMAPP.Domain.Entity;
 using Course_project_GYMAPP.Domain.Response;
 using Course_project_GYMAPP.Domain.ViewModels;
 using System;
@@ -17,5 +18,6 @@ namespace Course_project_GYMAPP.Service.Interfaces
         Task<BaseResponse<ClaimsIdentity>> Login(UserLoginViewModel model);
 
         Task<BaseResponse<bool>> EditUserData(string lastname, UserEditDataViewModel model);
+        Task<BaseUser> CheckName(string name);
     }
 }

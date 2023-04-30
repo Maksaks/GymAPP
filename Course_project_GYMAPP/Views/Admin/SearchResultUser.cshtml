@@ -26,10 +26,10 @@
                             <td>@user.Number</td>
                             <td>@user.CardBefore</td>
                             <td>@user.LastVisit</td>
-                            <td><button type="submit" class="btn btn-outline-secondary" id="input-group-button-right" onclick="showModal('../Admin/GetUser', @user.Id)">Редагувати</button></td>
+                            <td><button type="submit" class="btn btn-dark" id="input-group-button-right" onclick="showModal('../Admin/GetUser', @user.Id)">Редагувати</button></td>
                             <td>
                                 <form method="post" asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@user.Id">
-                                    <button type="submit" class="btn btn-outline-secondary" id="input-group-button-right">Видалити</button>
+                                    <button type="submit" class="btn btn-dark" id="input-group-button-right">Видалити</button>
                                 </form>
                             </td>
                         </tr>

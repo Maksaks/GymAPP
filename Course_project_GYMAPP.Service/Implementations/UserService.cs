@@ -18,11 +18,12 @@ namespace Course_project_GYMAPP.Service.Implementations
     {
         private readonly IUserRepository _userRepository;
         private readonly IPersonalCardRepository personalCardRepository;
-
-        public UserService(IUserRepository userRepository, IPersonalCardRepository personalCardRepository)
+        private readonly IGymUserRepository gymUserRepository;
+        public UserService(IUserRepository userRepository, IPersonalCardRepository personalCardRepository, IGymUserRepository gymUserRepository)
         {
             this._userRepository = userRepository;
             this.personalCardRepository = personalCardRepository;
+            this.gymUserRepository = gymUserRepository;
         }
 
         public async Task<BaseResponse<User>> GetUser(int id)
@@ -113,7 +114,11 @@ namespace Course_project_GYMAPP.Service.Implementations
                     baseResponse.StatusCode = StatusCode.UserNotFound;
                     return baseResponse;
                 }
-
+                var userGym = await gymUserRepository.GetByName(user.Name);
+                if(userGym != null)
+                {
+                    await gymUserRepository.Delete(userGym);
+                }
                 baseResponse.Data = await _userRepository.Delete(user);
                 baseResponse.Description = "Користувача видалено";
                 baseResponse.StatusCode = StatusCode.OK;
@@ -175,7 +180,7 @@ namespace Course_project_GYMAPP.Service.Implementations
                 user.Name = userVM.Name;
                 user.Age = userVM.Age;
                 user.Number = userVM.Number;
-
+                
                 baseResponse.Data = await _userRepository.Update(user);
                 baseResponse.Description = "Інформацію про користувача оновлено";
                 baseResponse.StatusCode = StatusCode.OK;
@@ -238,7 +243,15 @@ namespace Course_project_GYMAPP.Service.Implementations
                     baseResponse.StatusCode = StatusCode.UserNotFound;
                     return baseResponse;
                 }
-
+                if(user.Name != userVM.Name)
+                {
+                    var gymUser = await gymUserRepository.GetByName(user.Name);
+                    if(gymUser != null)
+                    {
+                        gymUser.Name = userVM.Name;
+                        await gymUserRepository.Update(gymUser);
+                    }
+                }
                 user.Name = userVM.Name;
                 user.Age = userVM.Age;
                 user.Number = userVM.Number;
@@ -262,30 +275,13 @@ namespace Course_project_GYMAPP.Service.Implementations
                 };
             }
         }
-        public async Task<BaseResponse<bool>> NewCardForUser(NewCardViewModel cardViewModel)
+        public async Task<BaseResponse<bool>> NewCardForUser(string userName, int cardId)
         {
             var baseResponse = new BaseResponse<bool>();
             try
             {
-                var user = await _userRepository.GetByName(cardViewModel.Name);
-                var cardDur = (await personalCardRepository.Get(cardViewModel.Id)).Duration;
-                if (user == null)
-                {
-                    var newuser = new User()
-                    {
-                        Name = cardViewModel.Name,
-                        Password = Encryption.EncrPassowrd(cardViewModel.Name),
-                        Age = 0,
-                        Number = "000-000-00-00",
-                        CardBefore = DateTime.Today.AddDays(Convert.ToDouble(cardDur)),
-                        LastVisit = DateTime.MinValue,
-                        DateReg = DateTime.Now
-                    };
-                    await _userRepository.Create(newuser);
-                    baseResponse.Description = "Користувача зареєстровано та оформлено абонемент. Тимчасовий пароль користувача - його логін";
-                    baseResponse.StatusCode = StatusCode.UserNotFound;
-                    return baseResponse;
-                }
+                var user = await _userRepository.GetByName(userName);
+                var cardDur = (await personalCardRepository.Get(cardId)).Duration;
 
                 if (user.CardBefore < DateTime.Today)
                 {
@@ -333,18 +329,19 @@ namespace Course_project_GYMAPP.Service.Implementations
             }
         }
 
-        public async Task<BaseResponse<List<string>>> GetStatistics()
+        public async Task<BaseResponse<List<Tuple<string, int>>>> GetStatistics()
         {
-            var baseResponse = new BaseResponse<List<string>>();
+            var baseResponse = new BaseResponse<List<Tuple<string, int>>>();
             try
             {
-                var list = new List<string>
+                var list = new List<Tuple<string, int>>
                 {
-                    "Загальна кількість користувачів: " + await _userRepository.GetCountAllUsers(),
-                    "Кількість нових користувачів за тиждень: " + await _userRepository.GetCountNewUserLastWeek(),
-                    "Кількість активних користувачів: " + await _userRepository.GetCountActiveUsers(),
-                    "Кількість відвідувачів за сьогодні: " + await _userRepository.GetCountUsersVisitedToday()
+                    new Tuple<string, int>("Загальна кількість користувачів: ", await _userRepository.GetCountAllUsers()),
+                    new Tuple<string, int>("Кількість нових користувачів за тиждень: ", await _userRepository.GetCountNewUserLastWeek()),
+                    new Tuple<string, int>("Кількість активних користувачів: ", await _userRepository.GetCountActiveUsers()),
+                    new Tuple<string, int>("Кількість відвідувачів за сьогодні: ", await _userRepository.GetCountUsersVisitedToday())
                 };
+
                 baseResponse.Data = list;
                 baseResponse.Description = "Статистику отримано";
                 baseResponse.StatusCode = StatusCode.OK;
@@ -352,7 +349,7 @@ namespace Course_project_GYMAPP.Service.Implementations
             }
             catch (Exception ex)
             {
-                return new BaseResponse<List<string>>()
+                return new BaseResponse<List<Tuple<string, int>>>()
                 {
                     Description = $"[GetStatistics] : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError

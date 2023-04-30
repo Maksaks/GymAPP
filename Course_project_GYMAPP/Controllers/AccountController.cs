@@ -84,7 +84,9 @@ namespace Course_project_GYMAPP.Controllers
                     Name = res.Data.Name,
                     Age = res.Data.Age,
                     Number= res.Data.Number,
-                    CardBefore = res.Data.CardBefore
+                    CardBefore = res.Data.CardBefore,
+                    LastVisit= res.Data.LastVisit,
+                    DataReg = res.Data.DateReg
                 });
             }
             return View();
@@ -92,30 +94,43 @@ namespace Course_project_GYMAPP.Controllers
         [HttpPost]
         public async Task<IActionResult> EditProfile(UserEditDataViewModel model)
         {
-            if (ModelState.IsValid)
+            var res = await accountService.EditUserData(User.Identity.Name, model);
+            if (res.StatusCode == Domain.Enum.StatusCode.OK)
             {
-                var res = await accountService.EditUserData(User.Identity.Name, model);
-                if (res.StatusCode == Domain.Enum.StatusCode.OK)
+                if(User.Identity.Name != model.Name)
                 {
-                    if(User.Identity.Name != model.Name)
+                    var claims = new List<Claim>
                     {
-                        var claims = new List<Claim>
-                        {
-                            new Claim(ClaimsIdentity.DefaultNameClaimType, model.Name),
-                            new Claim(ClaimsIdentity.DefaultRoleClaimType, "User")
-                        };
-                        var clid = new ClaimsIdentity(claims, "ApplicationCookie",
-                        ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                            new ClaimsPrincipal(clid));
-                    }
-
-                    Alert(res.Description, NotificationType.success);
-                    return RedirectToAction("EditProfile", "Account");
+                        new Claim(ClaimsIdentity.DefaultNameClaimType, model.Name),
+                        new Claim(ClaimsIdentity.DefaultRoleClaimType, "User")
+                    };
+                    var clid = new ClaimsIdentity(claims, "ApplicationCookie",
+                    ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(clid));
                 }
-                Alert(res.Description, NotificationType.warning);
+
+                Alert(res.Description, NotificationType.success);
+                return RedirectToAction("EditProfile", "Account");
             }
-            return View(model);
+            Alert(res.Description, NotificationType.warning);
+            return RedirectToAction("EditProfile", "Account");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CheckName(string name)
+        {
+            var res = await accountService.CheckName(name);
+            if(res != null)
+            {
+                Tuple<string, string> tuple = new Tuple<string, string>("data","false");
+                return Json(tuple);
+            }
+            else
+            {
+                Tuple<string, string> tuple = new Tuple<string, string>("data", "true");
+                return Json(tuple);
+            }
         }
     }
 }

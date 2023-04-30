@@ -11,7 +11,7 @@ namespace Course_project_GYMAPP.Domain.ViewModels
     public class UserLoginViewModel
     {
         [Display(Name = "Введіть ім'я")]
-        [Required(ErrorMessage = "Обов'язкове поле")]
+        [Required(ErrorMessage = "Обов'язкове поле ім'я")]
         public string Name { get; set; }
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Вкажіть пароль")]

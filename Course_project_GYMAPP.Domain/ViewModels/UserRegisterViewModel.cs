@@ -10,13 +10,13 @@ namespace Course_project_GYMAPP.Domain.ViewModels
     public class UserRegisterViewModel
     {
         [Display(Name = "Введіть ім'я")]
-        [Required(ErrorMessage = "Обов'язкове поле")]
+        [Required(ErrorMessage = "Обов'язкове поле ім'я")]
         public string Name { get; set; }
         [Display(Name = "Введіть телефон")]
-        [Required(ErrorMessage = "Обов'язкове поле")]
+        [Required(ErrorMessage = "Обов'язкове поле телефон")]
         public string Number { get; set; }
         [Display(Name = "Введіть вік")]
-        [Required(ErrorMessage = "Обов'язкове поле")]
+        [Required(ErrorMessage = "Обов'язкове поле вік")]
         public int Age { get; set; }
 
         [DataType(DataType.Password)]

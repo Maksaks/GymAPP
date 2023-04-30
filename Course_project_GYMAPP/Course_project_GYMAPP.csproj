@@ -24,8 +24,4 @@
     <ProjectReference Include="..\Course_project_GYMAPP.Service\Course_project_GYMAPP.Service.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\img\" />
-  </ItemGroup>
-
 </Project>

@@ -1,7 +1,23 @@
-﻿@model List<string>
+﻿@model List<Tuple<string,int>>
 
 
-@foreach (var item in Model)
-{
-    <h3>@item</h3>
-}
+<div class="tableBodyScroll" id="adminTable">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="col-8" style="text-align:center;font-size:25px;">Статистика</th>
+                <th scope="col" class="col-4" style="text-align:center;font-size:25px;"> </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td scope="row" style="text-align:left;font-size:25px;">@item.Item1</td>
+                    <td scope="row" style="text-align:center;font-size:25px;">@item.Item2</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
