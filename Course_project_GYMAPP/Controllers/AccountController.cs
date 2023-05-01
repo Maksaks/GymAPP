@@ -7,6 +7,7 @@ using Course_project_GYMAPP.Domain.ViewModels;
 using Course_project_GYMAPP.Domain.Entity;
 using System.Data;
 using Course_project_GYMAPP.Domain.Enum;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Course_project_GYMAPP.Controllers
 {
@@ -23,7 +24,7 @@ namespace Course_project_GYMAPP.Controllers
 
         [HttpGet]
         public IActionResult Register() => View();
-
+        
         [HttpPost]
         public async Task<IActionResult> Register(UserRegisterViewModel model)
         {
@@ -72,7 +73,7 @@ namespace Course_project_GYMAPP.Controllers
             Alert("Ви вийшли з облікового запису", NotificationType.success);
             return RedirectToAction("Index", "Home");
         }
-
+        [Authorize(Roles = "User")]
         [HttpGet]
         public async Task<IActionResult> EditProfile()
         {
@@ -91,6 +92,7 @@ namespace Course_project_GYMAPP.Controllers
             }
             return View();
         }
+        [Authorize(Roles = "User")]
         [HttpPost]
         public async Task<IActionResult> EditProfile(UserEditDataViewModel model)
         {

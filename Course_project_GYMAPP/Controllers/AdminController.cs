@@ -8,9 +8,12 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Course_project_GYMAPP.Domain.Response;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Course_project_GYMAPP.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : BaseController
     {
         private readonly IUserService userService;

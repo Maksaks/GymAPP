@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Course_project_GYMAPP.Controllers
 {
@@ -21,6 +23,7 @@ namespace Course_project_GYMAPP.Controllers
             this.trainerService = trainerService;
             this.personalCardService = personalCardService;
         }
+        [Authorize(Roles = "Trainer")]
         [HttpGet]
         public async Task<IActionResult> Index(int i = 0)
         {
