@@ -1,6 +1,6 @@
 ﻿
 html body {
-    background-color: #dcdcdc;
+    background-color: rgb(229, 204, 185);
 }
 
 .error {
@@ -31,15 +31,15 @@ input:valid {
 }
 
 .header {
-    font-family: "Times New Roman", Times, serif;
+    font-family:Tahoma;
     font-weight: bold;
     font-size: 11em;
-    color: white;
+    color: rgb(165, 32, 32);
     text-shadow: -4px 4px 3px #999999;
     text-align: center;
     border-top: 5px solid #252525;
     border-bottom: 5px solid #252525;
-    background-color: #686868;
+    background-color: rgb(229, 155, 79);
     margin-top: 0em;
     margin-bottom: 0px;
     -webkit-text-stroke: 0.02em black;
@@ -51,7 +51,7 @@ input:valid {
     font-size: 3em;
     border-top: 5px solid #252525;
     border-bottom: 5px solid #252525;
-    background-color: #686868;
+    background-color: rgb(229, 155, 79);
 }
 
 .header img {
@@ -61,7 +61,7 @@ input:valid {
 }
 
 nav {
-    background-color: #b4b4b4;
+    background-color: rgb(226, 132, 62);
     padding: 0px 0px 0px 0px;
     list-style: none;
     overflow: hidden;
@@ -76,7 +76,7 @@ nav ul {
 }
 
 nav li {
-    font-family: "Times New Roman", Times, serif;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 2.2em;
     display: inline-block;
     width: 12em;
@@ -96,14 +96,14 @@ nav li a:hover {
 
 nav li:hover {
     font-weight: bold;
-    background-color: #8d8d8d;
+    background-color: rgb(219, 158, 113);
     text-transform: uppercase;
 }
 
 footer {
     text-align: center;
     padding-bottom: 20px;
-    background-color: #b4b4b4;
+    background-color: rgb(229, 155, 79);
     color: white;
     font-size: 20px;
     border-top: 5px solid #252525;
@@ -121,6 +121,8 @@ footer {
     text-align: center;
     margin: 1em 0em 1em 0em;
 }
+
+
 
 #contacts-content ul {
     margin: 6em 0em 0em 12em;
@@ -149,7 +151,7 @@ footer {
     font-weight: normal;
     font-size: 2em;
     text-align: justify;
-    background-color: #dcdcdc;
+    background-color: rgb(229, 204, 185);
     padding: 2em 8em 2em 8em;
     text-indent: 1.5em;
     line-height: 2em;
@@ -159,6 +161,12 @@ footer {
     font-weight: bold;
     color: black;
     font-size: 2.01em;
+}
+
+.main_page_text img {
+    padding: 0;
+    border-radius: 70%;
+    border: 7px double #252525;
 }
 
 #list-gym ul {
@@ -177,6 +185,7 @@ footer {
     width: 500px;
     height: 400px;
     border: 7px double #252525;
+    border-radius: 10%;
 }
 
 #header-list {
@@ -200,7 +209,7 @@ footer {
     z-index: 99;
     border: 3px dashed black;
     outline: none;
-    background-color: #b6bd68;
+    background-color: rgb(255, 141, 0);
     color: black;
     cursor: pointer;
     padding: 15px;
@@ -209,7 +218,7 @@ footer {
 }
 
     #btn-top:hover {
-        background-color: #8d8d8d;
+        background-color: rgb(255, 125, 0);
         color: white;
         border-radius: 50px;
         font-size: 40px;

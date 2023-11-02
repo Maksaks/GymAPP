@@ -8,7 +8,7 @@
         <div class="row mt-5">
             @foreach(var item in Model)
             {
-                <div class="col-6 mt-3">
+            <div class="col-6 mt-3">
                     <div class="card p-3">
                         <form autocomplete="on" method="post" asp-controller="Card" asp-action="Index" asp-route-id="@item.ID">
                             <img src="img/card.png" style="height:350px; width:500px;" class="card-img-top" alt="card-grid-image">

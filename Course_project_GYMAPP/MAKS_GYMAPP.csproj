@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Course_project_GYMAPP.DAL\Course_project_GYMAPP.DAL.csproj" />
-    <ProjectReference Include="..\Course_project_GYMAPP.Service\Course_project_GYMAPP.Service.csproj" />
+    <ProjectReference Include="..\Course_project_GYMAPP.DAL\MAKS_GYMAPP.DAL.csproj" />
+    <ProjectReference Include="..\Course_project_GYMAPP.Service\MAKS_GYMAPP.Service.csproj" />
   </ItemGroup>
 
 </Project>
